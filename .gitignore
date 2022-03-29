@@ -2,9 +2,6 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
-
 # BlueJ files
 *.ctxt
 
@@ -49,9 +46,6 @@ gradle-app.setting
 
 # Files for the ART/Dalvik VM
 *.dex
-
-# Java class files
-*.class
 
 # Generated files
 bin/
@@ -179,9 +173,6 @@ cmake-build-*/
 # File-based project format
 *.iws
 
-# IntelliJ
-out/
-
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -207,3 +198,5 @@ fabric.properties
 .idea/sonarlint/
 
 .DS_Store
+/shelf/
+/workspace.xml

@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.ui.theme
+package com.anthonylldev.linkimbo.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
