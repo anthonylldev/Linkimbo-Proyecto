@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.anthonylldev.linkimbo.presentation.auth.AuthScreen
+import com.anthonylldev.linkimbo.presentation.auth.screen.AuthScreen
 import com.anthonylldev.linkimbo.presentation.splash.SplashScreen
 
 @Composable

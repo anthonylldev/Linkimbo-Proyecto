@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.presentation.auth.components
+package com.anthonylldev.linkimbo.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,14 +9,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
+import com.anthonylldev.linkimbo.R
 
 @Composable
-fun AuthTermsConditionsAndPolicity(
+fun AuthTermsConditionsAndPolicy(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -26,7 +28,7 @@ fun AuthTermsConditionsAndPolicity(
     ) {
 
         Text(
-            text = "By logging in or registering, you have agreeg to",
+            text = stringResource(id = R.string.auth_message),
             style = TextStyle(
                 color = MaterialTheme.colors.onBackground,
                 fontSize = 14.sp
@@ -42,7 +44,7 @@ fun AuthTermsConditionsAndPolicity(
                             fontSize = 14.sp
                         )
                     ) {
-                        append("Terms and Conditions")
+                        append(stringResource(id = R.string.terms_conditions))
                     }
                 }
             ) {
@@ -50,7 +52,7 @@ fun AuthTermsConditionsAndPolicity(
             }
 
             Text(
-                text = " And ",
+                text = " " + stringResource(id = R.string.and) + " ",
                 style = TextStyle(
                     fontSize = 14.sp
                 )
@@ -64,7 +66,7 @@ fun AuthTermsConditionsAndPolicity(
                             fontSize = 14.sp
                         )
                     ) {
-                        append("Privaci Policity")
+                        append(stringResource(id = R.string.privacy_policy))
                     }
                 }
             ) {

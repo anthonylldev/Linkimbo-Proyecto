@@ -1,6 +1,5 @@
-package com.anthonylldev.linkimbo.presentation.util.components
+package com.anthonylldev.linkimbo.presentation.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,11 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AuthButton(
+fun CustomButton(
     modifier: Modifier = Modifier,
     text: String,
     displayProgressBar: Boolean = false,
-    buttonBordered: Boolean = false,
     onClick: () -> Unit
 ) {
     val gradient = Brush.horizontalGradient(listOf(
@@ -29,7 +27,6 @@ fun AuthButton(
     ))
 
     if (!displayProgressBar) {
-        if (!buttonBordered) {
             Button(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 shape = RoundedCornerShape(20),
@@ -54,28 +51,6 @@ fun AuthButton(
                     )
                 }
             }
-        } else {
-            OutlinedButton(
-                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background),
-                shape = RoundedCornerShape(20),
-                border = BorderStroke(
-                    width = 2.dp,
-                    color = MaterialTheme.colors.primary,
-                ),
-                modifier = modifier
-                    .height(50.dp),
-                onClick = onClick,
-            ) {
-                Text(
-                    text = text,
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.onBackground
-                    )
-                )
-            }
-        }
     } else {
         CircularProgressIndicator(
             color = MaterialTheme.colors.primary,
