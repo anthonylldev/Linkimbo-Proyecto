@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Linkimbo</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_message">Before enjoying to Linkimbo</string>
+    <string name="welcome_message_2">Please register first</string>
+    <string name="auth_message">By logging in or registering, you have agree to</string>
+    <string name="terms_conditions">Terms and Conditions</string>
+    <string name="and">And</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="log_in">Log in</string>
+    <string name="no_account">No account? Sign up</string>
+    <string name="have_account">Have account? Log in</string>
+    <string name="here">here.</string>
+    <string name="log_in_google">Log in with Google</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_pass">Forgot password?</string>
+    <string name="continueS">Continue</string>
+    <string name="username">Username</string>
+    <string name="password_visible_content_description">Hide password</string>
+    <string name="password_hidden_content_description">Show password</string>
 </resources>
