@@ -43,6 +43,7 @@ fun AuthCreateAccount(
         CustomTextField(
             text = viewModel.usernameText.value,
             hint = stringResource(id = R.string.username),
+            error = viewModel.usernameError.value,
             onValueChange = {
                 viewModel.setUsernameText(it)
             }
@@ -53,6 +54,7 @@ fun AuthCreateAccount(
         CustomTextField(
             text = viewModel.emailText.value,
             hint = stringResource(id = R.string.email),
+            error = viewModel.emailError.value,
             keyboardType = KeyboardType.Email,
             onValueChange = {
                 viewModel.setEmailText(it)
@@ -64,6 +66,7 @@ fun AuthCreateAccount(
         CustomTextField(
             text = viewModel.passwordText.value,
             hint = stringResource(id = R.string.password),
+            error = viewModel.passwordError.value,
             keyboardType = KeyboardType.Password,
             onValueChange = {
                 viewModel.setPasswordText(it)

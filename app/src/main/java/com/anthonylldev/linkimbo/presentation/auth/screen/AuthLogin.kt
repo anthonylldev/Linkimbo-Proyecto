@@ -3,16 +3,12 @@ package com.anthonylldev.linkimbo.presentation.auth.screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -25,7 +21,6 @@ import com.anthonylldev.linkimbo.presentation.components.ClickableHere
 import com.anthonylldev.linkimbo.presentation.components.GoogleButton
 import com.anthonylldev.linkimbo.presentation.components.CustomButton
 import com.anthonylldev.linkimbo.presentation.components.CustomTextField
-import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceLarge
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
 
@@ -48,8 +43,9 @@ fun AuthLogin(
         CustomTextField(
             text = viewModel.username.value,
             hint = stringResource(id = R.string.username),
+            error = viewModel.usernameError.value,
             onValueChange = {
-                viewModel.setEmailText(it)
+                viewModel.setUsernameText(it)
             }
         )
 
@@ -58,6 +54,7 @@ fun AuthLogin(
         CustomTextField(
             text = viewModel.passwordText.value,
             hint = stringResource(id = R.string.password),
+            error = viewModel.passwordError.value,
             keyboardType = KeyboardType.Password,
             onValueChange = {
                 viewModel.setPasswordText(it)

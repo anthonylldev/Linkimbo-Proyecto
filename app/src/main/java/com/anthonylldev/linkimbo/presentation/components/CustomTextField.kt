@@ -30,7 +30,7 @@ fun CustomTextField(
     hint: String = "",
     text: String = "",
     maxLength: Int = 40,
-    error: String = "Invalid password",
+    error: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     showPasswordToggle: Boolean = false,
     modifier: Modifier = Modifier,
