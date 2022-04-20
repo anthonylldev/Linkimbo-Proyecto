@@ -97,6 +97,7 @@ fun AuthLogin(
 
         CustomTextField(
             text = viewModel.passwordText.value,
+            keyboardType = KeyboardType.Password,
             onValueChange = {
                 viewModel.setPasswordText(it)
             }

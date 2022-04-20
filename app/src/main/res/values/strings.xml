@@ -18,4 +18,6 @@
     <string name="forgot_pass">Forgot password?</string>
     <string name="continueS">Continue</string>
     <string name="username">Username</string>
+    <string name="password_visible_content_description">Hide password</string>
+    <string name="password_hidden_content_description">Show password</string>
 </resources>

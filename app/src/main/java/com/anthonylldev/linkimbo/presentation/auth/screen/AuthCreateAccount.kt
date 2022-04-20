@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -70,6 +71,7 @@ fun AuthCreateAccount(
 
         CustomTextField(
             text = viewModel.emailText.value,
+            keyboardType = KeyboardType.Email,
             onValueChange = {
                 viewModel.setEmailText(it)
             }
@@ -90,6 +92,7 @@ fun AuthCreateAccount(
 
         CustomTextField(
             text = viewModel.passwordText.value,
+            keyboardType = KeyboardType.Password,
             onValueChange = {
                 viewModel.setPasswordText(it)
             }
