@@ -25,7 +25,7 @@ fun AuthSheet(
 ) {
     Scaffold(
         modifier = Modifier
-            .height(475.dp)
+            .height(500.dp)
             .fillMaxWidth(),
         backgroundColor = Color.White,
         topBar = {

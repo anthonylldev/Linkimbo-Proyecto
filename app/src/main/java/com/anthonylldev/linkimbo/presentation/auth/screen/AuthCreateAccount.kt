@@ -19,6 +19,8 @@ import com.anthonylldev.linkimbo.presentation.components.ClickableHere
 import com.anthonylldev.linkimbo.presentation.components.CustomButton
 import com.anthonylldev.linkimbo.presentation.components.CustomTextField
 import com.anthonylldev.linkimbo.presentation.components.GoogleButton
+import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceExtraLarge
+import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceLarge
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
 
@@ -38,19 +40,9 @@ fun AuthCreateAccount(
         verticalArrangement = Arrangement.Bottom
     ) {
 
-        Text(
-            text = stringResource(id = R.string.username),
-            modifier = Modifier
-                .padding(start = 6.dp),
-            style = TextStyle(
-                color = Color.LightGray,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-        )
-
         CustomTextField(
             text = viewModel.usernameText.value,
+            hint = stringResource(id = R.string.username),
             onValueChange = {
                 viewModel.setUsernameText(it)
             }
@@ -58,19 +50,9 @@ fun AuthCreateAccount(
 
         Spacer(modifier = Modifier.height(SpaceMedium))
 
-        Text(
-            text = stringResource(id = R.string.email),
-            modifier = Modifier
-                .padding(start = 6.dp),
-            style = TextStyle(
-                color = Color.LightGray,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-        )
-
         CustomTextField(
             text = viewModel.emailText.value,
+            hint = stringResource(id = R.string.email),
             keyboardType = KeyboardType.Email,
             onValueChange = {
                 viewModel.setEmailText(it)
@@ -79,19 +61,9 @@ fun AuthCreateAccount(
 
         Spacer(modifier = Modifier.height(SpaceMedium))
 
-        Text(
-            text = stringResource(id = R.string.password),
-            modifier = Modifier
-                .padding(start = 6.dp),
-            style = TextStyle(
-                color = Color.LightGray,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-        )
-
         CustomTextField(
             text = viewModel.passwordText.value,
+            hint = stringResource(id = R.string.password),
             keyboardType = KeyboardType.Password,
             onValueChange = {
                 viewModel.setPasswordText(it)
@@ -102,7 +74,7 @@ fun AuthCreateAccount(
             }
         )
         
-        Spacer(modifier = Modifier.height(SpaceMedium))
+        Spacer(modifier = Modifier.height(SpaceExtraLarge))
 
         CustomButton(
             text = stringResource(id = R.string.continueS)
