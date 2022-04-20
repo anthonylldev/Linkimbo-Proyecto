@@ -29,7 +29,8 @@ fun AuthScreen(
             AuthSheet(
                 sheetState = sheetState,
                 pagerSelect = pagerSelect,
-                coroutineScope = coroutineScope
+                coroutineScope = coroutineScope,
+                navController = navController
             )
         }
     ) {

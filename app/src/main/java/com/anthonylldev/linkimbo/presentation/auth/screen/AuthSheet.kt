@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 fun AuthSheet(
     sheetState: ModalBottomSheetState,
     pagerSelect: PagerState,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    navController: NavController
 ) {
     Scaffold(
         modifier = Modifier
@@ -55,7 +57,7 @@ fun AuthSheet(
                     AuthCreateAccount()
                 }
                 1 -> {
-                    AuthLogin()
+                    AuthLogin(navController = navController)
                 }
             }
         }
