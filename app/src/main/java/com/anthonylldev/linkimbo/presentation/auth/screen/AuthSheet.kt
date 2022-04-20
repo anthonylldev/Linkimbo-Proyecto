@@ -54,10 +54,18 @@ fun AuthSheet(
         HorizontalPager(state = pagerSelect) { index ->
             when (index) {
                 0 -> {
-                    AuthCreateAccount(navController = navController)
+                    AuthCreateAccount(
+                        navController = navController,
+                        pagerSelect = pagerSelect,
+                        coroutineScope = coroutineScope
+                    )
                 }
                 1 -> {
-                    AuthLogin(navController = navController)
+                    AuthLogin(
+                        navController = navController,
+                        pagerSelect = pagerSelect,
+                        coroutineScope = coroutineScope
+                    )
                 }
             }
         }
