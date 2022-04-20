@@ -15,11 +15,18 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     private val _passwordText = mutableStateOf("")
     val passwordText: State<String> = _passwordText
 
+    private val _passwordVisibility = mutableStateOf(false)
+    val passwordVisibility: State<Boolean> = _passwordVisibility
+
     fun setEmailText(email: String) {
         _usernameText.value = email
     }
 
     fun setPasswordText(password: String) {
         _passwordText.value = password
+    }
+
+    fun setPasswordVisibility(visibility: Boolean) {
+        _passwordVisibility.value = visibility
     }
 }

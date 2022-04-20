@@ -95,6 +95,10 @@ fun AuthCreateAccount(
             keyboardType = KeyboardType.Password,
             onValueChange = {
                 viewModel.setPasswordText(it)
+            },
+            showPasswordToggle = viewModel.passwordVisibility.value,
+            onPasswordToggleClick = {
+                viewModel.setPasswordVisibility(it)
             }
         )
         
