@@ -25,7 +25,7 @@ fun AuthSheet(
 ) {
     Scaffold(
         modifier = Modifier
-            .height(450.dp)
+            .height(475.dp)
             .fillMaxWidth(),
         backgroundColor = Color.White,
         topBar = {
@@ -54,7 +54,7 @@ fun AuthSheet(
         HorizontalPager(state = pagerSelect) { index ->
             when (index) {
                 0 -> {
-                    AuthCreateAccount()
+                    AuthCreateAccount(navController = navController)
                 }
                 1 -> {
                     AuthLogin(navController = navController)

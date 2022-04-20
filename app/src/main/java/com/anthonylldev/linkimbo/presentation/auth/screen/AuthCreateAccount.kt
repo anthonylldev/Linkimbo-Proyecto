@@ -10,7 +10,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.presentation.auth.CreateAccountViewModel
 import com.anthonylldev.linkimbo.presentation.components.ClickableHere
 import com.anthonylldev.linkimbo.presentation.components.CustomButton
 import com.anthonylldev.linkimbo.presentation.components.CustomTextField
@@ -19,7 +22,10 @@ import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
 
 @Composable
-fun AuthCreateAccount() {
+fun AuthCreateAccount(
+    navController: NavController,
+    viewModel: CreateAccountViewModel = hiltViewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,6 +38,26 @@ fun AuthCreateAccount() {
     ) {
 
         Text(
+            text = stringResource(id = R.string.username),
+            modifier = Modifier
+                .padding(start = 6.dp),
+            style = TextStyle(
+                color = Color.LightGray,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+
+        CustomTextField(
+            text = viewModel.usernameText.value,
+            onValueChange = {
+                viewModel.setUsernameText(it)
+            }
+        )
+
+        Spacer(modifier = Modifier.height(SpaceMedium))
+
+        Text(
             text = stringResource(id = R.string.email),
             modifier = Modifier
                 .padding(start = 6.dp),
@@ -42,7 +68,12 @@ fun AuthCreateAccount() {
             )
         )
 
-        CustomTextField()
+        CustomTextField(
+            text = viewModel.emailText.value,
+            onValueChange = {
+                viewModel.setEmailText(it)
+            }
+        )
 
         Spacer(modifier = Modifier.height(SpaceMedium))
 
@@ -57,7 +88,12 @@ fun AuthCreateAccount() {
             )
         )
 
-        CustomTextField()
+        CustomTextField(
+            text = viewModel.passwordText.value,
+            onValueChange = {
+                viewModel.setPasswordText(it)
+            }
+        )
         
         Spacer(modifier = Modifier.height(SpaceMedium))
 
