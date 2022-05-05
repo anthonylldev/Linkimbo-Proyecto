@@ -22,7 +22,7 @@ fun CustomButton(
     onClick: () -> Unit
 ) {
     val gradient = Brush.horizontalGradient(listOf(
-        MaterialTheme.colors.surface,
+        MaterialTheme.colors.secondary,
         MaterialTheme.colors.primary
     ))
 

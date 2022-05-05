@@ -32,6 +32,7 @@ import com.anthonylldev.linkimbo.presentation.components.CustomButton
 import com.anthonylldev.linkimbo.presentation.components.CustomTextField
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
+import com.anthonylldev.linkimbo.presentation.util.Screen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -121,6 +122,7 @@ fun AuthLogin(
         CustomButton(
             text = stringResource(id = R.string.log_in)
         ) {
+            navController.navigate(Screen.MainFeedScreen.route)
             // TODO
         }
 
