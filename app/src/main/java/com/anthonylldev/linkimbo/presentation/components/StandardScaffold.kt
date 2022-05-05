@@ -19,6 +19,7 @@ import com.anthonylldev.linkimbo.presentation.util.Screen
 fun StandardScaffold(
     navController: NavController,
     modifier: Modifier = Modifier,
+    showBottomBar: Boolean = true,
     bottomNavItems: List<BottomNavItem> = listOf(
         BottomNavItem(
             route = Screen.MainFeedScreen.route,
@@ -45,23 +46,25 @@ fun StandardScaffold(
 ) {
     Scaffold(
         bottomBar = {
-            BottomAppBar(
-                modifier = Modifier,
-                backgroundColor = BottomAppBarColor,
-                cutoutShape = CircleShape,
-                elevation = 5.dp
-            ) {
-                BottomNavigation(
-                    backgroundColor = BottomAppBarColor
+            if(showBottomBar) {
+                BottomAppBar(
+                    modifier = Modifier,
+                    backgroundColor = BottomAppBarColor,
+                    cutoutShape = CircleShape,
+                    elevation = 5.dp
                 ) {
-                    bottomNavItems.forEachIndexed { i, bottomNavItem ->
-                        StandardBottomNavItem(
-                            icon = bottomNavItem.icon,
-                            contentDescription = bottomNavItem.contentDescription,
-                            selected = bottomNavItem.route == navController.currentDestination?.route,
-                            alertCount = bottomNavItem.alertCount,
-                        ) {
-                            navController.navigate(bottomNavItem.route)
+                    BottomNavigation(
+                        backgroundColor = BottomAppBarColor
+                    ) {
+                        bottomNavItems.forEachIndexed { i, bottomNavItem ->
+                            StandardBottomNavItem(
+                                icon = bottomNavItem.icon,
+                                contentDescription = bottomNavItem.contentDescription,
+                                selected = bottomNavItem.route == navController.currentDestination?.route,
+                                alertCount = bottomNavItem.alertCount,
+                            ) {
+                                navController.navigate(bottomNavItem.route)
+                            }
                         }
                     }
                 }
