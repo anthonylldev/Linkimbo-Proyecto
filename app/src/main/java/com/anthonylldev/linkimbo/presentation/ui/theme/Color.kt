@@ -15,3 +15,5 @@ val SurfaceDark = Color(0xFFFF9374)
 val OnPrimaryDark = Color(0xFFFFFFFF)
 val OnBackgroundDark = Color(0xFFFFFFFF)
 val OnSurfaceDark = Color(0xFF000000)
+
+val HintGray = Color(0xFF6D6D6D)
