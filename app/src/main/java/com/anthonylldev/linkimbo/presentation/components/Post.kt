@@ -2,6 +2,7 @@ package com.anthonylldev.linkimbo.presentation.components
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -18,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -29,95 +30,132 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.domain.models.Post
 import com.anthonylldev.linkimbo.presentation.ui.theme.HintGray
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
+import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
 import com.anthonylldev.linkimbo.util.Constants
 
 @Composable
 fun Post(
     post: Post,
-    profilePictureSize: Dp = 50.dp
+    profilePictureSize: Dp = 75.dp
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(5.dp)
+            .padding(SpaceMedium)
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(MaterialTheme.shapes.medium)
                 .offset(y = profilePictureSize / 2f)
+                .clip(MaterialTheme.shapes.medium)
+                .shadow(5.dp)
+                .background(MaterialTheme.colors.primary)
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.alf_picture),
-                contentDescription = "Post image"
+                painter = painterResource(id = R.drawable.post_sample_image),
+                contentDescription = "Post image",
             )
 
-            ActionRow(
-                username = "",
-                modifier = Modifier.fillMaxWidth(),
-                onLikeClick = { isLiked ->
-                    // TODO (on like click)
-                },
-                onCommentClick = {
-                    // TODO (on comment click)
-                },
-                onShareClick = {
-                    // TODO (on share click)
-                },
-                onUsernameClick = { username ->
-                    // TODO (on username click)
-                }
-            )
-
-            Text(
-                text = buildAnnotatedString {
-                    append(post.description)
-                    withStyle(
-                        SpanStyle(
-                            color = HintGray
-                        )
-                    ) {
-                        append(
-                            stringResource(id = R.string.read_more)
-                        )
-                    }
-                },
-                color = MaterialTheme.colors.onSurface,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = Constants.MAX_POST_DESCRIPTION_LINES
-            )
-
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(start = 3.dp, end = 3.dp)
+                    .background(MaterialTheme.colors.background)
             ) {
-                Text(
-                    text = stringResource (
-                        id = R.string.liked_by_x_people,
-                        post.likeCount
-                    ),
-                    fontWeight = FontWeight.Bold,
-                )
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            start = SpaceMedium - 3.dp,
+                            end = SpaceMedium - 3.dp,
+                            top = SpaceSmall / 2,
+                            bottom = SpaceSmall / 2
+
+                        )
+                ) {
+                    ActionRow(
+                        username = post.username,
+                        modifier = Modifier.fillMaxWidth(),
+                        onLikeClick = { isLiked ->
+                            // TODO (on like click)
+                        },
+                        onCommentClick = {
+                            // TODO (on comment click)
+                        },
+                        onShareClick = {
+                            // TODO (on share click)
+                        },
+                        onUsernameClick = { username ->
+                            // TODO (on username click)
+                        }
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(SpaceMedium)
+            ) {
+
 
                 Text(
-                    text = stringResource (
-                        id = R.string.x_comments,
-                        post.commentCount
-                    ),
-                    fontWeight = FontWeight.Bold,
+                    text = buildAnnotatedString {
+                        append(post.description)
+                        withStyle(
+                            SpanStyle(
+                                color = HintGray,
+                            )
+                        ) {
+                            append(
+                                LocalContext.current.getString(
+                                    R.string.read_more
+                                )
+                            )
+                        }
+                    },
+                    style = MaterialTheme.typography.body2,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = Constants.MAX_POST_DESCRIPTION_LINES
                 )
+
+                Spacer(modifier = Modifier.height(SpaceMedium))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(
+                            id = R.string.liked_by_x_people,
+                            post.likeCount
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.h2
+                    )
+
+                    Text(
+                        text = stringResource(
+                            id = R.string.x_comments,
+                            post.commentCount
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.h2
+                    )
+                }
             }
         }
 
         Image(
-            painter = painterResource(id = R.drawable.profile_picture),
+            painter = painterResource(id = R.drawable.alf_picture),
             contentDescription = "Profile picture",
             modifier = Modifier
                 .size(profilePictureSize)
@@ -138,6 +176,7 @@ fun EngagementButtons(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
         IconButton(
@@ -148,9 +187,9 @@ fun EngagementButtons(
             Icon(
                 imageVector = Icons.Filled.Favorite,
                 tint = if (isLike) {
-                    Color.Red
+                    MaterialTheme.colors.primary
                 } else {
-                    Color.White
+                    MaterialTheme.colors.onBackground
                 },
                 contentDescription = if (isLike) {
                     stringResource(id = R.string.unlike)
@@ -169,7 +208,8 @@ fun EngagementButtons(
         ) {
             Icon(
                 imageVector = Icons.Filled.Comment,
-                contentDescription = stringResource(id = R.string.comment)
+                contentDescription = stringResource(id = R.string.comment),
+                tint = MaterialTheme.colors.onBackground
             )
         }
 
@@ -182,7 +222,8 @@ fun EngagementButtons(
         ) {
             Icon(
                 imageVector = Icons.Filled.Share,
-                contentDescription = stringResource(id = R.string.share)
+                contentDescription = stringResource(id = R.string.share),
+                tint = MaterialTheme.colors.onBackground
             )
         }
     }
@@ -200,13 +241,14 @@ fun ActionRow(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
+        verticalAlignment = Alignment.CenterVertically,
+       modifier = modifier
     ) {
         Text(
             text = username,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.onBackground
             ),
             modifier = Modifier
                 .clickable {

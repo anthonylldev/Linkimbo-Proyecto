@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.anthonylldev.linkimbo.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.presentation.auth.screen.AuthScreen
 import com.anthonylldev.linkimbo.presentation.splash.SplashScreen
 
@@ -25,6 +26,12 @@ fun Navigation() {
             Screen.AuthScreen.route
         ) {
             AuthScreen(navController = navController)
+        }
+        
+        composable(
+            Screen.MainFeedScreen.route
+        ) {
+            MainFeedScreen(navController = navController)
         }
     }
 }
