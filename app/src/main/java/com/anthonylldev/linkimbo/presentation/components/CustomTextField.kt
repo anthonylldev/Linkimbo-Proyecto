@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -32,6 +34,8 @@ fun CustomTextField(
     maxLength: Int = 40,
     error: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardActions: KeyboardActions,
+    imeAction: ImeAction,
     showPasswordToggle: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
@@ -62,8 +66,10 @@ fun CustomTextField(
                 errorIndicatorColor = Color.Transparent
             ),
             keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
+                keyboardType = keyboardType,
+                imeAction = imeAction,
             ),
+            keyboardActions = keyboardActions,
             visualTransformation = if (!showPasswordToggle && isPasswordToggleDisplayed) {
                 PasswordVisualTransformation()
             } else {
