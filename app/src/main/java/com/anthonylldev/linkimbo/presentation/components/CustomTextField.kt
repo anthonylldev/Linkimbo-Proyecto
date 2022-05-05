@@ -79,7 +79,7 @@ fun CustomTextField(
                 Text(
                     text = hint,
                     style = TextStyle(
-                        color = Color(0xFFFF9374),
+                        color = MaterialTheme.colors.primaryVariant,
                         fontSize = 14.sp,
                     )
                 )
