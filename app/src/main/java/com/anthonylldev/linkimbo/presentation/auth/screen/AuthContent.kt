@@ -1,6 +1,5 @@
 package com.anthonylldev.linkimbo.presentation.auth.screen
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -17,22 +16,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.presentation.auth.AuthViewModel
 import com.anthonylldev.linkimbo.presentation.auth.screen.util.AuthPages
 import com.anthonylldev.linkimbo.presentation.components.AuthTermsConditionsAndPolicy
 import com.anthonylldev.linkimbo.presentation.components.CustomButton
 import com.anthonylldev.linkimbo.presentation.components.CustomOutlinedButton
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 @Composable
 fun AuthContent(
-    sheetState: ModalBottomSheetState,
-    pagerSelect: PagerState,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
 
     ConstraintLayout(
@@ -111,9 +110,10 @@ fun AuthContent(
             text = stringResource(id = R.string.create_an_account)
         ) {
             coroutineScope.launch {
-                pagerSelect.animateScrollToPage(page = AuthPages.Create.ordinal)
-                sheetState.animateTo(ModalBottomSheetValue.Expanded, tween(500))
+                authViewModel.scrollPage(AuthPages.Create)
+                authViewModel.sheetAnimateTo(ModalBottomSheetValue.Expanded, 500)
             }
+
         }
 
         CustomOutlinedButton(
@@ -127,8 +127,8 @@ fun AuthContent(
             text = stringResource(id = R.string.log_in)
         ) {
             coroutineScope.launch {
-                pagerSelect.animateScrollToPage(page = AuthPages.LogIn.ordinal)
-                sheetState.animateTo(ModalBottomSheetValue.Expanded, tween(500))
+                authViewModel.scrollPage(AuthPages.LogIn)
+                authViewModel.sheetAnimateTo(ModalBottomSheetValue.Expanded, 500)
             }
         }
 

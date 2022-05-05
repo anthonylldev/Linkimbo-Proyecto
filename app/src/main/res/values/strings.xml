@@ -9,10 +9,9 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="create_an_account">Create an account</string>
     <string name="log_in">Log in</string>
-    <string name="no_account">No account? Sign up</string>
-    <string name="have_account">Have account? Log in</string>
-    <string name="here">here.</string>
-    <string name="log_in_google">Log in with Google</string>
+    <string name="no_account">Don\'t have an account yet?</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="continue_google">Continue with Google</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_pass">Forgot password?</string>
@@ -20,4 +19,6 @@
     <string name="username">Username</string>
     <string name="password_visible_content_description">Hide password</string>
     <string name="password_hidden_content_description">Show password</string>
+    <string name="sign_up">Sign up!</string>
+    <string name="sign_in">Sign in!</string>
 </resources>

@@ -50,7 +50,7 @@ fun GoogleButton(
             )
 
             Text(
-                text = stringResource(id = R.string.log_in_google),
+                text = stringResource(id = R.string.continue_google),
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
