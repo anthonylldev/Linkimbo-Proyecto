@@ -1,6 +1,8 @@
 package com.anthonylldev.linkimbo.presentation.main_feed
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.presentation.components.Post
 import com.anthonylldev.linkimbo.presentation.components.StandardScaffold
@@ -10,7 +12,10 @@ fun MainFeedScreen(
     navController: NavController
 ) {
 
-    StandardScaffold() {
+    StandardScaffold(
+        navController = navController,
+        modifier = Modifier.fillMaxSize()
+    ) {
         Post(
             post = com.anthonylldev.linkimbo.domain.models.Post(
                 username = "Anthony Leon",

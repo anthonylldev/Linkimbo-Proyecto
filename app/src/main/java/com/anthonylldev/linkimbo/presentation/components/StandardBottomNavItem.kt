@@ -53,8 +53,7 @@ fun RowScope.StandardBottomNavItem(
     BottomNavigationItem(
         selected = selected,
         onClick = onClick,
-        modifier = modifier
-            .background(BottomAppBarColor),
+        modifier = modifier,
         enabled = enabled,
         selectedContentColor = selectedColor,
         unselectedContentColor = unselectedColor,
