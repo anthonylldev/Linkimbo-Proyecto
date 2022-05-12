@@ -50,12 +50,12 @@ fun StandardScaffold(
             if (showBottomBar) {
                 BottomAppBar(
                     modifier = Modifier,
-                    backgroundColor = BottomAppBarColor,
+                    backgroundColor = MaterialTheme.colors.surface,
                     cutoutShape = CircleShape,
                     elevation = 5.dp
                 ) {
                     BottomNavigation(
-                        backgroundColor = BottomAppBarColor
+                        backgroundColor = MaterialTheme.colors.surface
                     ) {
                         bottomNavItems.forEachIndexed { i, bottomNavItem ->
                             StandardBottomNavItem(

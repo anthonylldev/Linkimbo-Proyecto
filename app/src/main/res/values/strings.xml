@@ -31,4 +31,6 @@
     <string name="home">Home</string>
     <string name="chat">Chat</string>
     <string name="link_fab">Link fab</string>
+    <string name="back">Navigate back</string>
+    <string name="your_feed">Your feed</string>
 </resources>
