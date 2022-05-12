@@ -1,11 +1,9 @@
 package com.anthonylldev.linkimbo.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -19,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.domain.models.BottomNavItem
-import com.anthonylldev.linkimbo.presentation.ui.theme.BottomAppBarColor
 import com.anthonylldev.linkimbo.presentation.util.Screen
 
 @Composable

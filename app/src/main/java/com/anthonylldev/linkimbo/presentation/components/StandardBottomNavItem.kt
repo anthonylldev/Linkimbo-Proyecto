@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.anthonylldev.linkimbo.presentation.ui.theme.BottomAppBarColor
 import com.anthonylldev.linkimbo.presentation.ui.theme.HintGray
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
 import kotlin.jvm.Throws

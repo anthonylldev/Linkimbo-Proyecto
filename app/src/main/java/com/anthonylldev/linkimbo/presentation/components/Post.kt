@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,74 +37,62 @@ import com.anthonylldev.linkimbo.domain.models.Post
 import com.anthonylldev.linkimbo.presentation.ui.theme.HintGray
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
+import com.anthonylldev.linkimbo.presentation.ui.theme.UnselectedIcons
 import com.anthonylldev.linkimbo.util.Constants
+
 
 @Composable
 fun Post(
     post: Post,
+    modifier: Modifier = Modifier,
+    showProfileImage: Boolean = true,
+    onPostClick: () -> Unit = {},
     profilePictureSize: Dp = 75.dp
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(SpaceMedium)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = profilePictureSize / 2f)
+                .offset(y = if (showProfileImage) {
+                    profilePictureSize / 2f
+                } else 0.dp)
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
-                .background(MaterialTheme.colors.primary)
-        ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.post_sample_image),
-                contentDescription = "Post image",
-            )
-
-            Column(
-                modifier = Modifier
-                    .padding(start = 3.dp, end = 3.dp)
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            start = SpaceMedium - 3.dp,
-                            end = SpaceMedium - 3.dp,
-                            top = SpaceSmall / 2,
-                            bottom = SpaceSmall / 2
-
-                        )
-                ) {
-                    ActionRow(
-                        username = post.username,
-                        modifier = Modifier.fillMaxWidth(),
-                        onLikeClick = { isLiked ->
-                            // TODO (on like click)
-                        },
-                        onCommentClick = {
-                            // TODO (on comment click)
-                        },
-                        onShareClick = {
-                            // TODO (on share click)
-                        },
-                        onUsernameClick = { username ->
-                            // TODO (on username click)
-                        }
-                    )
+                .background(Color.LightGray)
+                .clickable {
+                    onPostClick()
                 }
-            }
-
+        ) {
+            Image(
+                painterResource(id = R.drawable.post_sample_image),
+                contentDescription = "Post image"
+            )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(SpaceMedium)
             ) {
+                ActionRow(
+                    username = post.username,
+                    modifier = Modifier.fillMaxWidth(),
+                    onLikeClick = { isLiked ->
 
+                    },
+                    onCommentClick = {
 
+                    },
+                    onShareClick = {
+
+                    },
+                    onUsernameClick = { username ->
+
+                    }
+                )
+                Spacer(modifier = Modifier.height(SpaceSmall))
                 Text(
                     text = buildAnnotatedString {
                         append(post.description)
@@ -121,9 +110,9 @@ fun Post(
                     },
                     style = MaterialTheme.typography.body2,
                     overflow = TextOverflow.Ellipsis,
+                    color = Color.Black,
                     maxLines = Constants.MAX_POST_DESCRIPTION_LINES
                 )
-
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
                 Row(
@@ -138,9 +127,9 @@ fun Post(
                         ),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
-                        style = MaterialTheme.typography.h2
+                        style = MaterialTheme.typography.h2,
+                        color = Color.Black
                     )
-
                     Text(
                         text = stringResource(
                             id = R.string.x_comments,
@@ -148,31 +137,33 @@ fun Post(
                         ),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
-                        style = MaterialTheme.typography.h2
+                        style = MaterialTheme.typography.h2,
+                        color = Color.Black
                     )
                 }
             }
         }
-
-        Image(
-            painter = painterResource(id = R.drawable.alf_picture),
-            contentDescription = "Profile picture",
-            modifier = Modifier
-                .size(profilePictureSize)
-                .clip(CircleShape)
-                .align(Alignment.TopCenter)
-        )
+        if (showProfileImage) {
+            Image(
+                painterResource(id = R.drawable.anthony_profile_square),
+                contentDescription = "Profile picture",
+                modifier = Modifier
+                    .size(profilePictureSize)
+                    .clip(CircleShape)
+                    .align(Alignment.TopCenter)
+            )
+        }
     }
 }
 
 @Composable
 fun EngagementButtons(
     modifier: Modifier = Modifier,
+    isLiked: Boolean = false,
     iconSize: Dp = 30.dp,
-    isLike: Boolean = false,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
-    onShareClick: () -> Unit = {}
+    onShareClick: () -> Unit = {},
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
@@ -180,50 +171,49 @@ fun EngagementButtons(
         modifier = modifier
     ) {
         IconButton(
-            onClick = { onLikeClick(!isLike) },
-            modifier = Modifier
-                .size(iconSize)
+            onClick = {
+                onLikeClick(!isLiked)
+            },
+            modifier = Modifier.size(iconSize)
         ) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
-                tint = if (isLike) {
-                    MaterialTheme.colors.primary
+                tint = if (isLiked) {
+                    Color.Red
                 } else {
-                    MaterialTheme.colors.onBackground
+                    UnselectedIcons
                 },
-                contentDescription = if (isLike) {
+                contentDescription = if (isLiked) {
                     stringResource(id = R.string.unlike)
                 } else {
                     stringResource(id = R.string.like)
                 }
             )
         }
-
         Spacer(modifier = Modifier.width(SpaceMedium))
-
         IconButton(
-            onClick = { onCommentClick() },
-            modifier = Modifier
-                .size(iconSize)
+            onClick = {
+                onCommentClick()
+            },
+            modifier = Modifier.size(iconSize)
         ) {
             Icon(
                 imageVector = Icons.Filled.Comment,
                 contentDescription = stringResource(id = R.string.comment),
-                tint = MaterialTheme.colors.onBackground
+                tint = UnselectedIcons
             )
         }
-
         Spacer(modifier = Modifier.width(SpaceMedium))
-
         IconButton(
-            onClick = { onShareClick() },
-            modifier = Modifier
-                .size(iconSize)
+            onClick = {
+                onShareClick()
+            },
+            modifier = Modifier.size(iconSize)
         ) {
             Icon(
                 imageVector = Icons.Filled.Share,
                 contentDescription = stringResource(id = R.string.share),
-                tint = MaterialTheme.colors.onBackground
+                tint = UnselectedIcons
             )
         }
     }
@@ -232,7 +222,7 @@ fun EngagementButtons(
 @Composable
 fun ActionRow(
     modifier: Modifier = Modifier,
-    isLike: Boolean = false,
+    isLiked: Boolean = false,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
@@ -242,22 +232,21 @@ fun ActionRow(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-       modifier = modifier
+        modifier = modifier,
     ) {
         Text(
             text = username,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colors.primary
             ),
             modifier = Modifier
                 .clickable {
                     onUsernameClick(username)
                 }
         )
-
         EngagementButtons(
-            isLike = isLike,
+            isLiked = isLiked,
             onLikeClick = onLikeClick,
             onCommentClick = onCommentClick,
             onShareClick = onShareClick
