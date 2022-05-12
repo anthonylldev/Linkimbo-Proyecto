@@ -1,21 +1,73 @@
 package com.anthonylldev.linkimbo.presentation.activity
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.domain.models.Activity
+import com.anthonylldev.linkimbo.domain.util.ActivityAction
+import com.anthonylldev.linkimbo.domain.util.DateFormatUtil
+import com.anthonylldev.linkimbo.presentation.components.StandarToolbar
+import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceExtraSmall
+import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
+import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
+import kotlin.random.Random
 
 @Composable
 fun ActivityScreen(
-    navController: NavController
+    navController: NavController,
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        Text(text = "Activity screen")
+        StandarToolbar(
+            navController = navController,
+            modifier = Modifier.fillMaxWidth(),
+            title = stringResource(id = R.string.activity),
+            showBackArrow = true,
+            navActions = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "",
+                    tint = MaterialTheme.colors.background,
+                    modifier = Modifier.padding(SpaceMedium)
+                )
+            }
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentPadding = PaddingValues(horizontal = SpaceMedium)
+        ) {
+            items(20) {
+                ActivityItem(
+                    activity = Activity(
+                        username = "Anthony Leon Lucero",
+                        actionType = if (Random.nextInt(2) == 0) {
+                            ActivityAction.LikedPost
+                        } else {
+                            ActivityAction.CommentOnPost
+                        },
+                        formattedTime = DateFormatUtil.timestamToFormattedString(
+                            timestamp = System.currentTimeMillis(),
+                            patter = "MMM dd HH:mm"
+                        )
+                    )
+                )
+                if (it < 19) {
+                    Spacer(modifier = Modifier.height(SpaceSmall))
+                }
+            }
+        }
     }
 }
