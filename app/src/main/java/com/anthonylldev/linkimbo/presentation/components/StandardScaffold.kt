@@ -1,11 +1,19 @@
 package com.anthonylldev.linkimbo.presentation.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,17 +53,25 @@ fun StandardScaffold(
     onFabClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
+
+    val gradient = Brush.verticalGradient(
+        listOf(
+            MaterialTheme.colors.secondary,
+            MaterialTheme.colors.primary
+        )
+    )
+
     Scaffold(
         bottomBar = {
             if (showBottomBar) {
                 BottomAppBar(
                     modifier = Modifier,
-                    backgroundColor = MaterialTheme.colors.surface,
+                    backgroundColor = Color.Black,
                     cutoutShape = CircleShape,
                     elevation = 5.dp
                 ) {
                     BottomNavigation(
-                        backgroundColor = MaterialTheme.colors.surface
+                        backgroundColor = Color.Black
                     ) {
                         bottomNavItems.forEachIndexed { i, bottomNavItem ->
                             StandardBottomNavItem(
@@ -76,13 +92,19 @@ fun StandardScaffold(
         },
         floatingActionButton = {
             if (showBottomBar) {
-                FloatingActionButton(
-                    backgroundColor = MaterialTheme.colors.primary,
-                    onClick = onFabClick
+                IconButton(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(50.dp)
+                        .clip(CircleShape)
+                        .background(gradient),
+                    onClick = { onFabClick() }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Star,
-                        contentDescription = stringResource(id = R.string.link_fab))
+                        contentDescription = stringResource(id = R.string.link_fab),
+                        tint = Color.White
+                    )
                 }
             }
         },
