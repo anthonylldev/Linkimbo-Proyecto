@@ -1,19 +1,18 @@
 package com.anthonylldev.linkimbo.presentation.components
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.presentation.ui.theme.TopAppBarColor
 
 @Composable
 fun StandarToolbar(
@@ -21,10 +20,18 @@ fun StandarToolbar(
     modifier: Modifier = Modifier,
     showBackArrow: Boolean = false,
     navActions: @Composable RowScope.() -> Unit = {},
-    title: @Composable () -> Unit,
+    title: String,
 ) {
     TopAppBar(
-        title = title,
+        title = {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onBackground,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+        },
         modifier = modifier,
         navigationIcon = if (showBackArrow) {
             {
@@ -40,7 +47,7 @@ fun StandarToolbar(
             }
         } else null,
         actions = navActions,
-        backgroundColor = MaterialTheme.colors.surface,
-        elevation = 5.dp
+        backgroundColor = MaterialTheme.colors.background,
+        elevation = 0.dp
     )
 }
