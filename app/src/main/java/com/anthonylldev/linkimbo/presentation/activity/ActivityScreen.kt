@@ -9,10 +9,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.domain.models.Activity
 import com.anthonylldev.linkimbo.domain.util.ActivityAction
+import com.anthonylldev.linkimbo.domain.util.DateFormatUtil
 import com.anthonylldev.linkimbo.presentation.components.StandarToolbar
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceExtraSmall
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
@@ -21,7 +23,7 @@ import kotlin.random.Random
 
 @Composable
 fun ActivityScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     Column(
         modifier = Modifier
@@ -56,7 +58,10 @@ fun ActivityScreen(
                         } else {
                             ActivityAction.CommentOnPost
                         },
-                        timestamp = System.currentTimeMillis()
+                        formattedTime = DateFormatUtil.timestamToFormattedString(
+                            timestamp = System.currentTimeMillis(),
+                            patter = "MMM dd HH:mm"
+                        )
                     )
                 )
                 if (it < 19) {

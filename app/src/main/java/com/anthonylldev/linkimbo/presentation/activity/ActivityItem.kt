@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.domain.models.Activity
 import com.anthonylldev.linkimbo.domain.util.ActivityAction
-import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
 
 @Composable
@@ -64,7 +63,7 @@ fun ActivityItem(
             fontSize = 12.sp)
 
             Text(
-                text = activity.timestamp.toString(),
+                text = activity.formattedTime,
                 textAlign = TextAlign.Right,
                 fontSize = 12.sp
             )

@@ -5,5 +5,5 @@ import com.anthonylldev.linkimbo.domain.util.ActivityAction
 data class Activity(
     val username: String,
     val actionType: ActivityAction,
-    val timestamp: Long
+    val formattedTime: String
 )
