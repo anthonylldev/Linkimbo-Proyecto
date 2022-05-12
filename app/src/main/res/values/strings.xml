@@ -33,4 +33,7 @@
     <string name="link_fab">Link fab</string>
     <string name="back">Navigate back</string>
     <string name="your_feed">Your feed</string>
+    <string name="profile_image">Profile image</string>
+    <string name="profile_icon">Profile icon</string>
+    <string name="post_detail">Post detail</string>
 </resources>

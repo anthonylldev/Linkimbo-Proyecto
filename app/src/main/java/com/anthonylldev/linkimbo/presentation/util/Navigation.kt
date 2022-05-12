@@ -12,6 +12,7 @@ import com.anthonylldev.linkimbo.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.presentation.auth.screen.AuthScreen
 import com.anthonylldev.linkimbo.presentation.chat.ChatScreen
 import com.anthonylldev.linkimbo.presentation.link.LinkScreen
+import com.anthonylldev.linkimbo.presentation.post_detail.PostDetailScreen
 import com.anthonylldev.linkimbo.presentation.splash.SplashScreen
 
 @Composable
@@ -64,6 +65,12 @@ fun Navigation(
             Screen.Link.route
         ) {
             LinkScreen(navController = navController)
+        }
+
+        composable(
+            Screen.PostDetailScreen.route
+        ) {
+            PostDetailScreen(navController = navController)
         }
     }
 }

@@ -34,10 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.domain.models.Post
-import com.anthonylldev.linkimbo.presentation.ui.theme.HintGray
-import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
-import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
-import com.anthonylldev.linkimbo.presentation.ui.theme.UnselectedIcons
+import com.anthonylldev.linkimbo.presentation.ui.theme.*
 import com.anthonylldev.linkimbo.util.Constants
 
 
@@ -47,7 +44,6 @@ fun Post(
     modifier: Modifier = Modifier,
     showProfileImage: Boolean = true,
     onPostClick: () -> Unit = {},
-    profilePictureSize: Dp = 75.dp
 ) {
     Box(
         modifier = modifier
@@ -58,7 +54,7 @@ fun Post(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset(y = if (showProfileImage) {
-                    profilePictureSize / 2f
+                    ProfileSize / 2f
                 } else 0.dp)
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
@@ -148,7 +144,7 @@ fun Post(
                 painterResource(id = R.drawable.anthony_profile_square),
                 contentDescription = "Profile picture",
                 modifier = Modifier
-                    .size(profilePictureSize)
+                    .size(ProfileSize)
                     .clip(CircleShape)
                     .align(Alignment.TopCenter)
             )
