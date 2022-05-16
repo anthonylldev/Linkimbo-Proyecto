@@ -31,7 +31,6 @@ import com.anthonylldev.linkimbo.presentation.components.GoogleButton
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceExtraLarge
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
-import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

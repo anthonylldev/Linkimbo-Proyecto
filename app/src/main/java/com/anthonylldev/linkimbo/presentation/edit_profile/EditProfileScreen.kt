@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.presentation.components.CustomTextField
@@ -23,10 +24,12 @@ import com.anthonylldev.linkimbo.presentation.components.StandarToolbar
 import com.anthonylldev.linkimbo.presentation.ui.theme.HintGray
 import com.anthonylldev.linkimbo.presentation.ui.theme.ProfileSize
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
+import com.anthonylldev.linkimbo.presentation.util.TextFieldState
 
 @Composable
 fun EditProfileScreen(
-    navController: NavController
+    navController: NavController,
+    editProfileViewModel: EditProfileViewModel = hiltViewModel()
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -70,10 +73,11 @@ fun EditProfileScreen(
                     .padding(SpaceMedium),
             ) {
                 CustomTextField(
-                    text = "",
+                    text = editProfileViewModel.nameState.value.text,
                     hint = stringResource(id = R.string.name),
-                    error = "",
+                    error = editProfileViewModel.nameState.value.error,
                     onValueChange = {
+                        editProfileViewModel.setNameState(TextFieldState(it))
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -86,11 +90,11 @@ fun EditProfileScreen(
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
                 CustomTextField(
-                    text = "",
+                    text = editProfileViewModel.username.value.text,
                     hint = stringResource(id = R.string.username),
-                    error = "",
+                    error = editProfileViewModel.username.value.error,
                     onValueChange = {
-
+                        editProfileViewModel.setUsernameState(TextFieldState(it))
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -103,11 +107,11 @@ fun EditProfileScreen(
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
                 CustomTextField(
-                    text = "",
+                    text = editProfileViewModel.biography.value.text,
                     hint = stringResource(id = R.string.biography),
-                    error = "",
+                    error = editProfileViewModel.biography.value.error,
                     onValueChange = {
-
+                        editProfileViewModel.setBiographyState(TextFieldState(it))
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -116,14 +120,15 @@ fun EditProfileScreen(
                     ),
                     imeAction = ImeAction.Next
                 )
-                
+
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
                 CustomTextField(
-                    text = "",
+                    text = editProfileViewModel.website.value.text,
                     hint = stringResource(id = R.string.website),
-                    error = "",
+                    error = editProfileViewModel.website.value.error,
                     onValueChange = {
+                        editProfileViewModel.setWebsiteState(TextFieldState(it))
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
