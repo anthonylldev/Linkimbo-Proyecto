@@ -35,7 +35,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AuthCreateAccount(
     navController: NavController,
@@ -46,7 +45,6 @@ fun AuthCreateAccount(
 
     val focusManager = LocalFocusManager.current
 
-    val focus = LocalFocusManager.current
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -21,7 +21,7 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     user: User,
-    isOwnProfile: Boolean = false,
+    isOwnProfile: Boolean = true,
     isFollowing:  Boolean = true
 ) {
     Column(

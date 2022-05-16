@@ -12,6 +12,7 @@ import com.anthonylldev.linkimbo.presentation.add.AddScreen
 import com.anthonylldev.linkimbo.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.presentation.auth.screen.AuthScreen
 import com.anthonylldev.linkimbo.presentation.chat.ChatScreen
+import com.anthonylldev.linkimbo.presentation.edit_profile.EditProfileScreen
 import com.anthonylldev.linkimbo.presentation.post_detail.PostDetailScreen
 import com.anthonylldev.linkimbo.presentation.profile.ProfileScreen
 import com.anthonylldev.linkimbo.presentation.splash.SplashScreen
@@ -84,6 +85,12 @@ fun Navigation(
                     postCount = 2
                 )
             )
+        }
+
+        composable(
+            Screen.EditProfileScreen.route
+        ) {
+            EditProfileScreen(navController = navController)
         }
     }
 }

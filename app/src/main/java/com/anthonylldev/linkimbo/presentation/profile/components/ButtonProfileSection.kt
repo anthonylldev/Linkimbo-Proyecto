@@ -26,6 +26,7 @@ fun ButtonProfileSection(
             text = stringResource(id = R.string.edit_profile),
             modifier = Modifier
                 .height(35.dp)
+                .padding(horizontal = SpaceMedium)
         ) {
             navController.navigate(Screen.EditProfileScreen.route)
         }

@@ -45,4 +45,7 @@
     <string name="message">Message</string>
     <string name="edit_profile">Edit profile</string>
     <string name="unfollow">Unfollow</string>
+    <string name="name">Name</string>
+    <string name="biography">Biography</string>
+    <string name="website">Website</string>
 </resources>
