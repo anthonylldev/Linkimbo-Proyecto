@@ -40,7 +40,7 @@ fun MainFeedScreen(
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .clickable {
-                            /*TODO*/
+                            navController.navigate(Screen.ProfileScreen.route)
                         }
                 )
             }

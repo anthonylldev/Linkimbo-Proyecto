@@ -31,11 +31,9 @@ import com.anthonylldev.linkimbo.presentation.components.GoogleButton
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceExtraLarge
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceSmall
-import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AuthCreateAccount(
     navController: NavController,
@@ -46,7 +44,6 @@ fun AuthCreateAccount(
 
     val focusManager = LocalFocusManager.current
 
-    val focus = LocalFocusManager.current
     Column(
         modifier = Modifier
             .fillMaxSize()
