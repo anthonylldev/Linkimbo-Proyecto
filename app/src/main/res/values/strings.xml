@@ -48,4 +48,5 @@
     <string name="name">Name</string>
     <string name="biography">Biography</string>
     <string name="website">Website</string>
+    <string name="create_post">Create post</string>
 </resources>

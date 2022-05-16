@@ -25,7 +25,7 @@ fun StandardScaffold(
             contentDescription = "Home"
         ),
         BottomNavItem(
-            route = Screen.AddScreen.route,
+            route = Screen.CreatePostScreen.route,
             icon = Icons.Default.Add,
             contentDescription = "Add"
         ),
