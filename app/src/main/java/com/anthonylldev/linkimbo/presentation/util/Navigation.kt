@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.anthonylldev.linkimbo.domain.models.User
 import com.anthonylldev.linkimbo.presentation.activity.ActivityScreen
-import com.anthonylldev.linkimbo.presentation.add.AddScreen
+import com.anthonylldev.linkimbo.presentation.create_post.CreatePostScreen
 import com.anthonylldev.linkimbo.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.presentation.auth.screen.AuthScreen
 import com.anthonylldev.linkimbo.presentation.chat.ChatScreen
@@ -58,9 +58,9 @@ fun Navigation(
         }
 
         composable(
-            Screen.AddScreen.route
+            Screen.CreatePostScreen.route
         ) {
-            AddScreen(navController = navController)
+            CreatePostScreen(navController = navController)
         }
 
         composable(
