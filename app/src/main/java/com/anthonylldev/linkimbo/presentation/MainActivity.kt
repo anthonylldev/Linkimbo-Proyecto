@@ -40,10 +40,7 @@ class MainActivity : ComponentActivity() {
                             Screen.ActivityScreen.route,
                             Screen.ChatScreen.route,
                         ),
-                        modifier = Modifier.fillMaxSize(),
-                        onFabClick = {
-                            navController.navigate(Screen.Link.route)
-                        }
+                        modifier = Modifier.fillMaxSize()
                     ) {
                         Navigation(navController)
                     }

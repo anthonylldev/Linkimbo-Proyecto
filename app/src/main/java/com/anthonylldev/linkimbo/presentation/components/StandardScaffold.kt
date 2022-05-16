@@ -1,20 +1,15 @@
 package com.anthonylldev.linkimbo.presentation.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.domain.models.BottomNavItem
 import com.anthonylldev.linkimbo.presentation.util.Screen
 
@@ -34,7 +29,6 @@ fun StandardScaffold(
             icon = Icons.Default.Add,
             contentDescription = "Add"
         ),
-        BottomNavItem(route = ""),
         BottomNavItem(
             route = Screen.ActivityScreen.route,
             icon = Icons.Default.Favorite,
@@ -86,26 +80,6 @@ fun StandardScaffold(
                 }
             }
         },
-        floatingActionButton = {
-            if (showBottomBar) {
-                IconButton(
-                    modifier = Modifier
-                        .height(50.dp)
-                        .width(50.dp)
-                        .clip(CircleShape)
-                        .background(gradient),
-                    onClick = { onFabClick() }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = stringResource(id = R.string.link_fab),
-                        tint = Color.White
-                    )
-                }
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
     ) {
         content()
