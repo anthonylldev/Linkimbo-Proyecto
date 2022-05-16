@@ -16,16 +16,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.presentation.components.CustomTextField
 import com.anthonylldev.linkimbo.presentation.components.StandarToolbar
 import com.anthonylldev.linkimbo.presentation.ui.theme.HintGray
 import com.anthonylldev.linkimbo.presentation.ui.theme.SpaceMedium
+import com.anthonylldev.linkimbo.presentation.util.TextFieldState
 
 @Composable
 fun CreatePostScreen(
-    navController: NavController
+    navController: NavController,
+    createPostViewModel: CreatePostViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -65,7 +68,7 @@ fun CreatePostScreen(
                         shape = MaterialTheme.shapes.medium
                     )
                     .clickable {
-                        /*TODO(Create post)*/
+                        /*TODO(Add image post)*/
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -79,10 +82,11 @@ fun CreatePostScreen(
             Spacer(modifier = Modifier.height(SpaceMedium))
 
             CustomTextField(
-                text = "",
+                text = createPostViewModel.postDetail.value.text,
                 hint = stringResource(id = R.string.post_detail),
-                error = "",
+                error = createPostViewModel.postDetail.value.error,
                 onValueChange = {
+                    createPostViewModel.setPostDetailState(TextFieldState(it))
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
