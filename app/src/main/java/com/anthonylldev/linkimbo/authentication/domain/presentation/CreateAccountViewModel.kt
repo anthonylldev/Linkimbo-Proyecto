@@ -69,8 +69,6 @@ class CreateAccountViewModel @Inject constructor(
         }
     }
 
-
-
     fun isLoading(): Boolean {
         return _displayProgressBar.value
     }

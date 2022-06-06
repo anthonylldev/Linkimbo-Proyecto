@@ -37,7 +37,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AuthLogin(
     navController: NavController,
@@ -60,7 +59,7 @@ fun AuthLogin(
     ) {
 
         CustomTextField(
-            text = loginViewModel.username.value,
+            text = loginViewModel.usernameText.value,
             hint = stringResource(id = R.string.username),
             error = loginViewModel.usernameError.value,
             onValueChange = {
@@ -122,8 +121,13 @@ fun AuthLogin(
         CustomButton(
             text = stringResource(id = R.string.log_in)
         ) {
-            navController.navigate(Screen.MainFeedScreen.route)
-            // TODO
+            loginViewModel.login()
+
+            println(loginViewModel.loginSuccessful.value)
+
+            if (loginViewModel.loginSuccessful.value) {
+                navController.navigate(Screen.MainFeedScreen.route)
+            }
         }
 
         Spacer(modifier = Modifier.height(SpaceMedium))

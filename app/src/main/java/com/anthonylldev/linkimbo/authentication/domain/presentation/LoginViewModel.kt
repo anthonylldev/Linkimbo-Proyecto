@@ -3,14 +3,20 @@ package com.anthonylldev.linkimbo.authentication.domain.presentation
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.anthonylldev.linkimbo.authentication.application.dto.LoginDto
+import com.anthonylldev.linkimbo.authentication.application.service.AuthenticationService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val authenticationService: AuthenticationService
+) : ViewModel() {
 
     private val _usernameText = mutableStateOf("")
-    val username: State<String> = _usernameText
+    val usernameText: State<String> = _usernameText
 
     private val _usernameError = mutableStateOf("")
     val usernameError: State<String> = _usernameError
@@ -23,6 +29,34 @@ class LoginViewModel @Inject constructor() : ViewModel() {
 
     private val _passwordVisibility = mutableStateOf(false)
     val passwordVisibility: State<Boolean> = _passwordVisibility
+
+    private val _displayProgressBar = mutableStateOf(false)
+    val displayProgressBar: State<Boolean> = _displayProgressBar
+
+    private val _loginSuccessful = mutableStateOf(false)
+    val loginSuccessful: State<Boolean> = _loginSuccessful
+
+    fun login() {
+        _displayProgressBar.value = true
+        viewModelScope.launch {
+
+            val loginDto = LoginDto(
+                username = usernameText.value,
+                password = passwordText.value
+            )
+            try {
+                authenticationService.login(request = loginDto)
+
+                authenticationService.authenticate()
+
+                _loginSuccessful.value = true
+
+                _displayProgressBar.value = false
+            } catch (e: Exception) {
+                _displayProgressBar.value = false
+            }
+        }
+    }
 
     fun setUsernameText(email: String) {
         _usernameText.value = email
