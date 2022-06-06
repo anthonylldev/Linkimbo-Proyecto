@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.anthonylldev.linkimbo.authentication.domain.User
+import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.presentation.activity.ActivityScreen
 import com.anthonylldev.linkimbo.main_feed.domain.presentation.create_post.CreatePostScreen
 import com.anthonylldev.linkimbo.main_feed.domain.presentation.main_feed.MainFeedScreen

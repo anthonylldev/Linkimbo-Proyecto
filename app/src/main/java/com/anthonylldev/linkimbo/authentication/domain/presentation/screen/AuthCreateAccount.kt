@@ -25,6 +25,7 @@ import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.authentication.domain.presentation.AuthViewModel
 import com.anthonylldev.linkimbo.authentication.domain.presentation.CreateAccountViewModel
 import com.anthonylldev.linkimbo.authentication.domain.presentation.screen.util.AuthPages
+import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.components.CustomButton
 import com.anthonylldev.linkimbo.util.ui.components.CustomTextField
 import com.anthonylldev.linkimbo.util.ui.components.GoogleButton
@@ -114,15 +115,22 @@ fun AuthCreateAccount(
         Spacer(modifier = Modifier.height(SpaceExtraLarge))
 
         CustomButton(
-            text = stringResource(id = R.string.continueS)
+            text = stringResource(id = R.string.continueS),
+            displayProgressBar = createAccountViewModel.isLoading()
         ) {
-            // TODO
+            createAccountViewModel.createAccount()
+
+            if (createAccountViewModel.createAccountSuccessful.value) {
+                navController.navigate(Screen.MainFeedScreen.route)
+            } else {
+                /* TODO( modal error message ) */
+            }
         }
 
         Spacer(modifier = Modifier.height(SpaceMedium))
 
         GoogleButton {
-            // TODO
+            /* TODO( register with google ) */
         }
 
         Spacer(modifier = Modifier.height(SpaceSmall))

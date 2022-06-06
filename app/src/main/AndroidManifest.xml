@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anthonylldev.linkimbo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".LinkimboApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_linkimbo"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_linkimbo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Linkimbo"

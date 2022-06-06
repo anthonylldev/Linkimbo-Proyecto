@@ -52,11 +52,18 @@ fun CustomButton(
                 }
             }
     } else {
-        CircularProgressIndicator(
-            color = MaterialTheme.colors.primary,
-            strokeWidth = 6.dp,
+        Row(
             modifier = Modifier
-                .size(50.dp)
-        )
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircularProgressIndicator(
+                color = MaterialTheme.colors.primary,
+                strokeWidth = 6.dp,
+                modifier = Modifier
+                    .size(50.dp)
+            )
+        }
     }
 }

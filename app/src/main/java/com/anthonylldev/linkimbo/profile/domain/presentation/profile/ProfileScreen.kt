@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.anthonylldev.linkimbo.authentication.domain.User
+import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.components.ProfileHeader
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.components.ProfilePostSection

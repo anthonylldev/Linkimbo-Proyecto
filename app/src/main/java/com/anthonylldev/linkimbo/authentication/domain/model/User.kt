@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.authentication.domain
+package com.anthonylldev.linkimbo.authentication.domain.model
 
 data class User(
     val profilePictureUrl: String,
