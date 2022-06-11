@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -35,6 +36,7 @@ import com.anthonylldev.linkimbo.util.ui.theme.SpaceSmall
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -46,6 +48,25 @@ fun AuthLogin(
 ) {
 
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(key1 = true) {
+        loginViewModel.eventFlow.collectLatest {
+            loginViewModel.setPasswordVisibility(false)
+
+            if (loginViewModel.loginSuccessful.value) {
+                navController.navigate(Screen.MainFeedScreen.route)
+            } else {
+                /* TODO( modal error message ) */
+            }
+        }
+    }
+
+    /*sealed class UiEvent: Event() {
+        data class ShowSnackbar(val uiText: UiText) : UiEvent()
+        data class Navigate(val route: String) : UiEvent()
+        object NavigateUp : UiEvent()
+        object OnLogin: UiEvent()
+    }*/
 
     Column(
         modifier = Modifier
@@ -122,12 +143,6 @@ fun AuthLogin(
             text = stringResource(id = R.string.log_in)
         ) {
             loginViewModel.login()
-
-            println(loginViewModel.loginSuccessful.value)
-
-            if (loginViewModel.loginSuccessful.value) {
-                navController.navigate(Screen.MainFeedScreen.route)
-            }
         }
 
         Spacer(modifier = Modifier.height(SpaceMedium))

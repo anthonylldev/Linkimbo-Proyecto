@@ -1,5 +1,6 @@
 package com.anthonylldev.linkimbo.authentication.domain.presentation
 
+import android.app.usage.UsageEvents
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,8 @@ import com.anthonylldev.linkimbo.authentication.application.dto.CreateAccountDto
 import com.anthonylldev.linkimbo.authentication.application.dto.TokenDto
 import com.anthonylldev.linkimbo.authentication.application.service.AuthenticationService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,6 +46,9 @@ class CreateAccountViewModel @Inject constructor(
     private val _createAccountSuccessful = mutableStateOf(false)
     val createAccountSuccessful: State<Boolean> = _createAccountSuccessful
 
+    private val _eventFlow = MutableSharedFlow<UsageEvents.Event>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     fun createAccount() {
         _displayProgressBar.value = true
         viewModelScope.launch {
@@ -62,7 +68,8 @@ class CreateAccountViewModel @Inject constructor(
 
                 _createAccountSuccessful.value = true
 
-                _displayProgressBar.value = false
+                _eventFlow.emit(UsageEvents.Event())
+
             } catch (e: Exception) {
                 _displayProgressBar.value = false
             }

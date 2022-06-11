@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -33,6 +34,7 @@ import com.anthonylldev.linkimbo.util.ui.theme.SpaceExtraLarge
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceSmall
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -44,6 +46,18 @@ fun AuthCreateAccount(
 ) {
 
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(key1 = true) {
+        createAccountViewModel.eventFlow.collectLatest {
+            createAccountViewModel.setPasswordVisibility(false)
+
+            if (createAccountViewModel.createAccountSuccessful.value) {
+                navController.navigate(Screen.MainFeedScreen.route)
+            } else {
+                /* TODO( modal error message ) */
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -119,12 +133,6 @@ fun AuthCreateAccount(
             displayProgressBar = createAccountViewModel.isLoading()
         ) {
             createAccountViewModel.createAccount()
-
-            if (createAccountViewModel.createAccountSuccessful.value) {
-                navController.navigate(Screen.MainFeedScreen.route)
-            } else {
-                /* TODO( modal error message ) */
-            }
         }
 
         Spacer(modifier = Modifier.height(SpaceMedium))
