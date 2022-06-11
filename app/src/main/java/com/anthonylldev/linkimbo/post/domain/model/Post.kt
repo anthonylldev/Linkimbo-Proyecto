@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.main_feed.domain.model
+package com.anthonylldev.linkimbo.post.domain.model
 
 data class Post(
     val username: String,

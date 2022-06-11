@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.main_feed.domain.presentation.create_post
+package com.anthonylldev.linkimbo.post.domain.presentation.create_post
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

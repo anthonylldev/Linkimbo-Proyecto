@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.main_feed.domain.presentation.post_detail
+package com.anthonylldev.linkimbo.post.domain.presentation.post_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.main_feed.domain.model.Comment
-import com.anthonylldev.linkimbo.main_feed.domain.model.Post
+import com.anthonylldev.linkimbo.post.domain.model.Comment
+import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.ui.components.ActionRow
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceExtraSmall

@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.main_feed.domain.model.Post
+import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ui.theme.*
 

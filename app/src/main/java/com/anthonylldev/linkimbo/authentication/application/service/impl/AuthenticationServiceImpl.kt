@@ -1,6 +1,7 @@
 package com.anthonylldev.linkimbo.authentication.application.service.impl
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.anthonylldev.linkimbo.authentication.application.service.AuthenticationService
 import com.anthonylldev.linkimbo.authentication.application.dto.CreateAccountDto
 import com.anthonylldev.linkimbo.authentication.application.dto.LoginDto
@@ -16,6 +17,13 @@ class AuthenticationServiceImpl(
     override suspend fun createAccount(request: CreateAccountDto): TokenDto {
         try {
             val response = api.createAccount(request)
+
+            response.userId.let {
+                println("Overriding userId with $it")
+                sharedPreferences.edit()
+                    .putString(Constants.PERSONAL_USER_ID, response.userId)
+                    .apply()
+            }
 
             response.token.let {
                 println("Overriding token with $it")
@@ -34,6 +42,13 @@ class AuthenticationServiceImpl(
     override suspend fun login(request: LoginDto): TokenDto {
         try {
             val response = api.login(request)
+
+            response.userId.let {
+                println("Overriding userId with $it")
+                sharedPreferences.edit()
+                    .putString(Constants.PERSONAL_USER_ID, response.userId)
+                    .apply()
+            }
 
             response.token.let {
                 println("Overriding token with $it")
