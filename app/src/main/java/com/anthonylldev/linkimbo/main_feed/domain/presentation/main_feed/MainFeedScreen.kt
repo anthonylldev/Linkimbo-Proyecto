@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import androidx.navigation.navArgument
+import androidx.navigation.navOptions
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.util.ui.components.Post
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
@@ -40,14 +42,14 @@ fun MainFeedScreen(
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .clickable {
-                            navController.navigate(Screen.ProfileScreen.route)
+                            navController.navigate(Screen.ProfileScreen.route + "?userId=${"me"}")
                         }
                 )
             }
         )
 
         Post(
-            post = com.anthonylldev.linkimbo.main_feed.domain.model.Post(
+            post = com.anthonylldev.linkimbo.post.domain.model.Post(
                 username = "Anthony Leon",
                 profilePictureUrl = "",
                 imageUrl = "",

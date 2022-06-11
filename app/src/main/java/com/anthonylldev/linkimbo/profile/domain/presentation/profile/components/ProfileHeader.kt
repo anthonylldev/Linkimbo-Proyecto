@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.authentication.domain.model.User
+import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.ProfileSize
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
@@ -22,9 +23,7 @@ import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 @Composable
 fun ProfileHeader(
     navController: NavController,
-    user: User,
-    isOwnProfile: Boolean,
-    isFollowing: Boolean,
+    profile: ProfileResponse?,
 ) {
     Row(
         modifier = Modifier
@@ -36,7 +35,7 @@ fun ProfileHeader(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = user.followerCount.toString(),
+                text = profile?.followerCount.toString(),
                 style = MaterialTheme.typography.h6,
                 fontWeight = FontWeight.Bold
             )
@@ -60,7 +59,7 @@ fun ProfileHeader(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = user.followingCount.toString(),
+                text = profile?.followingCount.toString(),
                 style = MaterialTheme.typography.h6,
                 fontWeight = FontWeight.Bold
             )
@@ -79,18 +78,18 @@ fun ProfileHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = user.realName,
+            text = profile?.realName.toString(),
             style = MaterialTheme.typography.h6
         )
 
         Text(
-            text = user.description,
+            text = profile?.description.toString(),
             style = MaterialTheme.typography.body2,
             textAlign = TextAlign.Center
         )
 
         Text(
-            text = user.website,
+            text = profile?.website.toString(),
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.primary
         )
@@ -101,7 +100,7 @@ fun ProfileHeader(
 
     ButtonProfileSection(
         navController = navController,
-        isOwnProfile = isOwnProfile,
-        isFollowing =  isFollowing
+        isOwnProfile = profile?.isOwnProfile ?: false,
+        isFollowing =  profile?.isFollowing ?: false
     )
 }

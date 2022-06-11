@@ -8,8 +8,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.components.ProfileHeader
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.components.ProfilePostSection
@@ -20,10 +20,13 @@ import com.google.accompanist.flowlayout.FlowRow
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    user: User,
-    isOwnProfile: Boolean = true,
-    isFollowing:  Boolean = true
+    profileViewModel: ProfileViewModel = hiltViewModel(),
+    userId: String?
 ) {
+
+    userId?.let { profileViewModel.setUserId(it) }
+    profileViewModel.loadProfile()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,7 +34,7 @@ fun ProfileScreen(
         StandarToolbar(
             navController = navController,
             modifier = Modifier.fillMaxWidth(),
-            title = user.username,
+            title = profileViewModel.profile.value?.username.toString(),
             showBackArrow = true,
             navActions = {
                 Icon(
@@ -50,9 +53,7 @@ fun ProfileScreen(
             item {
                 ProfileHeader(
                     navController = navController,
-                    user = user,
-                    isOwnProfile = isOwnProfile,
-                    isFollowing = isFollowing
+                    profile = profileViewModel.profile.value
                 )
             }
             

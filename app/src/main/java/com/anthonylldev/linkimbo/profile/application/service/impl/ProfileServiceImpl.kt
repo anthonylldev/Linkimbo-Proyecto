@@ -18,7 +18,7 @@ class ProfileServiceImpl(
         try {
 
             if (userId == "me") {
-                this.sharedPreferences.getString(Constants.KEY_JWT_TOKEN, null)?.let {
+                this.sharedPreferences.getString(Constants.PERSONAL_USER_ID, null)?.let {
                     return this.api.loadProfile(it)
                 }
             } else {
