@@ -1,6 +1,7 @@
 package com.anthonylldev.linkimbo.profile.application.service.impl
 
 import android.content.SharedPreferences
+import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.authentication.infrastructure.AuthenticationRestController
 import com.anthonylldev.linkimbo.profile.application.service.ProfileService
 import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
@@ -26,6 +27,22 @@ class ProfileServiceImpl(
             }
 
             return null
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun getUser(): User {
+        try {
+            return this.api.getUser()
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun updateUser(user: User) {
+        try {
+            this.api.updateUser(user)
         } catch (e: Exception) {
             throw e
         }

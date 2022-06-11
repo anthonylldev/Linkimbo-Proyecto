@@ -1,6 +1,7 @@
 package com.anthonylldev.linkimbo.profile.domain.presentation.edit_profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
@@ -49,6 +50,9 @@ fun EditProfileScreen(
                     contentDescription = "",
                     tint = HintGray,
                     modifier = Modifier.padding(SpaceMedium)
+                        .clickable {
+                            editProfileViewModel.updateUser()
+                        }
                 )
             }
         )
@@ -107,11 +111,11 @@ fun EditProfileScreen(
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
                 CustomTextField(
-                    text = editProfileViewModel.biography.value.text,
+                    text = editProfileViewModel.description.value.text,
                     hint = stringResource(id = R.string.biography),
-                    error = editProfileViewModel.biography.value.error,
+                    error = editProfileViewModel.description.value.error,
                     onValueChange = {
-                        editProfileViewModel.setBiographyState(TextFieldState(it))
+                        editProfileViewModel.setDescriptionState(TextFieldState(it))
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
