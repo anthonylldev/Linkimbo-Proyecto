@@ -1,5 +1,6 @@
 package com.anthonylldev.linkimbo.post.domain.presentation.create_post
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -9,14 +10,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -29,7 +29,9 @@ import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
-import kotlinx.coroutines.launch
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 
 @Composable
 fun CreatePostScreen(
@@ -37,10 +39,24 @@ fun CreatePostScreen(
     createPostViewModel: CreatePostViewModel = hiltViewModel()
 ) {
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) {
-        createPostViewModel.setImageUriState(it)
+    val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // use the cropped image
+            createPostViewModel.setImageUriState(result.uriContent)
+        } else {
+            // an error occurred cropping
+            val exception = result.error
+        }
+    }
+
+    val imagePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        val cropOptions = CropImageContractOptions(uri, CropImageOptions())
+        cropOptions.setMinCropResultSize(1920, 1080)
+        cropOptions.setMaxCropResultSize(3996, 2160)
+        cropOptions.setRequestedSize(4320, 2264)
+        cropOptions.setAspectRatio(16,9)
+        cropOptions.setFixAspectRatio(true)
+        imageCropLauncher.launch(cropOptions)
     }
 
     Column(
@@ -60,7 +76,7 @@ fun CreatePostScreen(
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .clickable {
-                             createPostViewModel.saveImage()
+                            createPostViewModel.saveImage()
                         }
                 )
             }
@@ -81,7 +97,7 @@ fun CreatePostScreen(
                         shape = MaterialTheme.shapes.medium
                     )
                     .clickable {
-                        launcher.launch("image/*")
+                        imagePickerLauncher.launch("image/*")
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -109,7 +125,7 @@ fun CreatePostScreen(
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                         createPostViewModel.saveImage()
+                        createPostViewModel.saveImage()
                     }
                 ),
                 imeAction = ImeAction.Done
