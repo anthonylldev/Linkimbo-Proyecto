@@ -48,7 +48,12 @@ fun Post(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(SpaceMedium)
+            .padding(
+                top = SpaceMedium,
+                start = SpaceMedium,
+                end = SpaceMedium,
+                bottom = SpaceExtraLarge,
+            )
     ) {
         Column(
             modifier = Modifier
@@ -73,7 +78,7 @@ fun Post(
                     .padding(SpaceMedium)
             ) {
                 ActionRow(
-                    username = post.username,
+                    username = post.userId,
                     modifier = Modifier.fillMaxWidth(),
                     onLikeClick = { isLiked ->
 
