@@ -1,6 +1,7 @@
 package com.anthonylldev.linkimbo.util.ui.components
 
 
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.Constants
+import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.ui.theme.*
 
 
@@ -58,9 +61,11 @@ fun Post(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = if (showProfileImage) {
-                    ProfileSize / 2f
-                } else 0.dp)
+                .offset(
+                    y = if (showProfileImage) {
+                        ProfileSize / 2f
+                    } else 0.dp
+                )
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
                 .background(Color.LightGray)
@@ -69,9 +74,9 @@ fun Post(
                 }
         ) {
             Image(
-                painterResource(id = R.drawable.post_sample_image),
-                contentDescription = "Post image"
-            )
+                bitmap = ImageUtil.base64ToBitmap(post.imageBase64)!!.asImageBitmap(),
+                contentDescription = null)
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

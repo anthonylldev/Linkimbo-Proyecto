@@ -1,17 +1,23 @@
 package com.anthonylldev.linkimbo.post.domain.presentation.create_post
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -23,12 +29,20 @@ import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreatePostScreen(
     navController: NavController,
     createPostViewModel: CreatePostViewModel = hiltViewModel()
 ) {
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) {
+        createPostViewModel.setImageUriState(it)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +60,7 @@ fun CreatePostScreen(
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .clickable {
-                            /*TODO(Create post)*/
+                             createPostViewModel.saveImage()
                         }
                 )
             }
@@ -67,15 +81,21 @@ fun CreatePostScreen(
                         shape = MaterialTheme.shapes.medium
                     )
                     .clickable {
-                        /*TODO(Add image post)*/
+                        launcher.launch("image/*")
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.create_post),
-                    tint = MaterialTheme.colors.onBackground
-                )
+                if (createPostViewModel.bitmap.value == null) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(id = R.string.create_post),
+                        tint = MaterialTheme.colors.onBackground
+                    )
+                } else {
+                    Image(
+                        bitmap = createPostViewModel.bitmap.value!!.asImageBitmap(),
+                        contentDescription = null)
+                }
             }
 
             Spacer(modifier = Modifier.height(SpaceMedium))
@@ -89,7 +109,7 @@ fun CreatePostScreen(
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        /*TODO(Create POST)*/
+                         createPostViewModel.saveImage()
                     }
                 ),
                 imeAction = ImeAction.Done

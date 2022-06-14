@@ -56,7 +56,7 @@ fun ActivityScreen(
                         } else {
                             ActivityAction.CommentOnPost
                         },
-                        formattedTime = DateFormatUtil.timestamToFormattedString(
+                        formattedTime = DateFormatUtil.timestampToFormattedString(
                             timestamp = System.currentTimeMillis(),
                             patter = "MMM dd HH:mm"
                         )
