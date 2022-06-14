@@ -1,9 +1,9 @@
 package com.anthonylldev.linkimbo.util.di
 
 import android.content.SharedPreferences
-import com.anthonylldev.linkimbo.profile.application.service.ProfileService
-import com.anthonylldev.linkimbo.profile.application.service.impl.ProfileServiceImpl
-import com.anthonylldev.linkimbo.profile.infrastructure.ProfileRestController
+import com.anthonylldev.linkimbo.profile.application.service.UserService
+import com.anthonylldev.linkimbo.profile.application.service.impl.UserServiceImpl
+import com.anthonylldev.linkimbo.profile.infrastructure.UserRestController
 import com.anthonylldev.linkimbo.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -20,22 +20,22 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileApi(client: OkHttpClient): ProfileRestController {
+    fun provideProfileApi(client: OkHttpClient): UserRestController {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ProfileRestController::class.java)
+            .create(UserRestController::class.java)
     }
 
     @Provides
     @Singleton
     fun provideProfileService(
-        api: ProfileRestController,
+        api: UserRestController,
         sharedPreferences: SharedPreferences
-    ): ProfileService {
-        return ProfileServiceImpl(api, sharedPreferences)
+    ): UserService {
+        return UserServiceImpl(api, sharedPreferences)
     }
 
 }

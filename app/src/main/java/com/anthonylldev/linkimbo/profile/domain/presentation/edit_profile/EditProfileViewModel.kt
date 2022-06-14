@@ -1,11 +1,13 @@
 package com.anthonylldev.linkimbo.profile.domain.presentation.edit_profile
 
+import android.content.SharedPreferences
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.profile.application.service.ProfileService
+import com.anthonylldev.linkimbo.profile.application.service.UserService
+import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
-    private val profileService: ProfileService
+    private val userService: UserService,
+    private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     private val _nameState = mutableStateOf(TextFieldState())
@@ -57,7 +60,8 @@ class EditProfileViewModel @Inject constructor(
 
     fun loadUser() {
         viewModelScope.launch {
-            _user.value = profileService.getUser()
+            val userId = sharedPreferences.getString(Constants.PERSONAL_USER_ID, null)
+            if (userId != null) _user.value = userService.getUserById(userId)
 
             if (_user.value != null) {
                 _username.value = TextFieldState(user.value!!.username)
@@ -71,7 +75,7 @@ class EditProfileViewModel @Inject constructor(
     fun updateUser() {
         viewModelScope.launch {
             if (_user.value != null) {
-                profileService.updateUser(_user.value!!)
+                userService.updateUserById(_user.value!!, _user.value!!.id)
             }
         }
     }

@@ -26,7 +26,7 @@ import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.domain.model.Comment
 import com.anthonylldev.linkimbo.post.domain.model.Post
-import com.anthonylldev.linkimbo.util.ui.components.ActionRow
+import com.anthonylldev.linkimbo.util.ui.components.post.ActionRow
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceExtraSmall
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium

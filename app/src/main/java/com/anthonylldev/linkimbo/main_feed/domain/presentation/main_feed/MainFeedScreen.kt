@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -14,10 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.navArgument
-import androidx.navigation.navOptions
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.util.ui.components.Post
+import com.anthonylldev.linkimbo.util.ui.components.post.Post
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.theme.*
@@ -65,3 +62,4 @@ fun MainFeedScreen(
         }
     }
 }
+

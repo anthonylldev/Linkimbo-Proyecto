@@ -1,7 +1,6 @@
-package com.anthonylldev.linkimbo.util.ui.components
+package com.anthonylldev.linkimbo.util.ui.components.post
 
 
-import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +22,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -34,6 +32,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.Constants
@@ -43,11 +42,15 @@ import com.anthonylldev.linkimbo.util.ui.theme.*
 
 @Composable
 fun Post(
-    post: Post,
     modifier: Modifier = Modifier,
+    post: Post,
+    viewModel: PostViewModel = hiltViewModel(),
     showProfileImage: Boolean = true,
     onPostClick: () -> Unit = {},
 ) {
+
+    viewModel.loadUsername(post.userId)
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -83,7 +86,7 @@ fun Post(
                     .padding(SpaceMedium)
             ) {
                 ActionRow(
-                    username = post.userId,
+                    username = viewModel.ownerPostUsername.value,
                     modifier = Modifier.fillMaxWidth(),
                     onLikeClick = { isLiked ->
 
@@ -151,7 +154,7 @@ fun Post(
         }
         if (showProfileImage) {
             Image(
-                painterResource(id = R.drawable.anthony_profile_square),
+                bitmap = ImageUtil.base64ToBitmap(post.imageBase64)!!.asImageBitmap(),
                 contentDescription = "Profile picture",
                 modifier = Modifier
                     .size(ProfileSize)

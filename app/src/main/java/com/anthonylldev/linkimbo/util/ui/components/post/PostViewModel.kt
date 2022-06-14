@@ -1,33 +1,32 @@
-package com.anthonylldev.linkimbo.main_feed.domain.presentation.main_feed
+package com.anthonylldev.linkimbo.util.ui.components.post
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.profile.application.service.UserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainFeedViewModel @Inject constructor(
-    private val postService: PostService
-) : ViewModel() {
+class PostViewModel @Inject constructor(
+    private val postService: PostService,
+    private val userService: UserService
+): ViewModel() {
 
-    private val _allPosts = mutableStateOf(emptyList<Post>())
-    val allPosts: State<List<Post>> = _allPosts
+    private val _ownerPostUsername = mutableStateOf("")
+    val ownerPostUsername: State<String> = _ownerPostUsername
 
-    init {
-        loadPosts()
-    }
-
-    private fun loadPosts() {
+    fun loadUsername(userId: String) {
         viewModelScope.launch {
-            _allPosts.value = postService.getAllPostSortByTimestamp()
+            val user: User? = userService.getUserById(userId)
+
+            if (user != null) {
+                _ownerPostUsername.value = user.username
+            }
         }
     }
 }
