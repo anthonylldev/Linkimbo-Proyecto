@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -16,6 +17,7 @@ import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
+import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.ProfileSize
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
@@ -46,14 +48,27 @@ fun ProfileHeader(
             )
         }
 
-        Image(
-            painter = painterResource(id = R.drawable.anthony_profile_square),
-            contentDescription = "user.profilePictureUrl",
-            modifier = Modifier
-                .padding(SpaceMedium)
-                .size(ProfileSize)
-                .clip(MaterialTheme.shapes.large)
-        )
+        if (profile != null) {
+            if (profile.imageBase64 == null) {
+                Image(
+                    painter = painterResource(id = R.drawable.default_profile),
+                    contentDescription = "user.profilePictureUrl",
+                    modifier = Modifier
+                        .padding(SpaceMedium)
+                        .size(ProfileSize)
+                        .clip(MaterialTheme.shapes.large)
+                )
+            } else {
+                Image(
+                    bitmap = ImageUtil.base64ToBitmap(profile.imageBase64)!!.asImageBitmap(),
+                    contentDescription = "user.profilePictureUrl",
+                    modifier = Modifier
+                        .padding(SpaceMedium)
+                        .size(ProfileSize)
+                        .clip(MaterialTheme.shapes.large)
+                )
+            }
+        }
 
         Column(
             horizontalAlignment = Alignment.Start

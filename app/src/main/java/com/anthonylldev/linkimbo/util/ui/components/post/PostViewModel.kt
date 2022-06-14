@@ -20,13 +20,14 @@ class PostViewModel @Inject constructor(
     private val _ownerPostUsername = mutableStateOf("")
     val ownerPostUsername: State<String> = _ownerPostUsername
 
+    private val _ownerPostProfilePicture = mutableStateOf<String?>(null)
+    val ownerPostProfilePicture: State<String?> = _ownerPostProfilePicture
+
     fun loadUsername(userId: String) {
         viewModelScope.launch {
-            val user: User? = userService.getUserById(userId)
-
-            if (user != null) {
-                _ownerPostUsername.value = user.username
-            }
+            val user: User = userService.getUserById(userId)
+            _ownerPostUsername.value = user.username
+            _ownerPostProfilePicture.value = user.imageBase64
         }
     }
 }

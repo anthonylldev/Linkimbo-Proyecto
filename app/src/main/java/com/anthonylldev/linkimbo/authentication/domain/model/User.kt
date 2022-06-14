@@ -6,7 +6,7 @@ data class User(
     val email: String,
     val password: String,
     var realName: String? = "",
-    val profilePictureUrl: String? = null,
+    var imageBase64: String? = null,
     var description: String? = "",
     var website: String? = "",
     val followerCount: Int = 0,

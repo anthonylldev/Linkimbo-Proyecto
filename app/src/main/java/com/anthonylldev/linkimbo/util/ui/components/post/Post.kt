@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -153,14 +154,25 @@ fun Post(
             }
         }
         if (showProfileImage) {
-            Image(
-                bitmap = ImageUtil.base64ToBitmap(post.imageBase64)!!.asImageBitmap(),
-                contentDescription = "Profile picture",
-                modifier = Modifier
-                    .size(ProfileSize)
-                    .clip(CircleShape)
-                    .align(Alignment.TopCenter)
-            )
+            if (viewModel.ownerPostProfilePicture.value != null) {
+                Image(
+                    bitmap = ImageUtil.base64ToBitmap(viewModel.ownerPostProfilePicture.value!!)!!.asImageBitmap(),
+                    contentDescription = "Profile picture",
+                    modifier = Modifier
+                        .size(ProfileSize)
+                        .clip(CircleShape)
+                        .align(Alignment.TopCenter)
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.default_profile),
+                    contentDescription = "Profile picture",
+                    modifier = Modifier
+                        .size(ProfileSize)
+                        .clip(CircleShape)
+                        .align(Alignment.TopCenter)
+                )
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.anthonylldev.linkimbo.profile.domain.presentation.edit_profile
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,12 +10,14 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,12 +25,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.ui.components.CustomTextField
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.ProfileSize
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 
 @Composable
 fun EditProfileScreen(
@@ -34,6 +43,26 @@ fun EditProfileScreen(
 ) {
 
     val focusManager = LocalFocusManager.current
+
+    val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // use the cropped image
+            editProfileViewModel.setImageUriState(result.uriContent)
+        } else {
+            // an error occurred cropping
+            val exception = result.error
+        }
+    }
+
+    val imagePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        val cropOptions = CropImageContractOptions(uri, CropImageOptions())
+        cropOptions.setMinCropResultSize(500, 500)
+        cropOptions.setMaxCropResultSize(3996, 2160)
+        cropOptions.setRequestedSize(4320, 2264)
+        cropOptions.setAspectRatio(1,1)
+        cropOptions.setFixAspectRatio(true)
+        imageCropLauncher.launch(cropOptions)
+    }
 
     Column(
         modifier = Modifier
@@ -62,14 +91,33 @@ fun EditProfileScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.anthony_profile_square),
-                contentDescription = "user.profilePictureUrl",
-                modifier = Modifier
-                    .padding(SpaceMedium)
-                    .size(ProfileSize)
-                    .clip(MaterialTheme.shapes.large)
-            )
+
+
+            if (editProfileViewModel.bitmap.value == null) {
+                Image(
+                    painter = painterResource(id = R.drawable.default_profile),
+                    contentDescription = "Default picture",
+                    modifier = Modifier
+                        .padding(SpaceMedium)
+                        .size(ProfileSize)
+                        .clip(MaterialTheme.shapes.large)
+                        .clickable {
+                            imagePickerLauncher.launch("image/*")
+                        }
+                )
+            } else {
+                Image(
+                    bitmap = ImageUtil.base64ToBitmap(editProfileViewModel.user.value!!.imageBase64!!)!!.asImageBitmap(),
+                    contentDescription = "user.profilePictureUrl",
+                    modifier = Modifier
+                        .padding(SpaceMedium)
+                        .size(ProfileSize)
+                        .clip(MaterialTheme.shapes.large)
+                        .clickable {
+                            imagePickerLauncher.launch("image/*")
+                        }
+                )
+            }
 
             Column(
                 modifier = Modifier
