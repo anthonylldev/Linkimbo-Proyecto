@@ -7,18 +7,21 @@ import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-interface ProfileRestController {
+interface UserRestController {
 
     @GET("/user/profile/{userId}")
     suspend fun loadProfile(
         @Path("userId") userId: String
     ): ProfileResponse
 
-    @GET("/user")
-    suspend fun getUser() : User
+    @GET("/user/{userId}")
+    suspend fun getUserById(
+        @Path("userId") userId: String
+    ): User
 
-    @PUT("/user")
-    suspend fun updateUser(
-        @Body user: User
+    @PUT("/user/{userId}")
+    suspend fun updateUserById(
+        @Body user: User,
+        @Path("userId") userId: String
     )
 }

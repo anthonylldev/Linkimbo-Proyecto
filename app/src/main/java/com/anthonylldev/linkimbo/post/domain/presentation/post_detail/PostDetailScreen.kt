@@ -26,7 +26,7 @@ import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.domain.model.Comment
 import com.anthonylldev.linkimbo.post.domain.model.Post
-import com.anthonylldev.linkimbo.util.ui.components.ActionRow
+import com.anthonylldev.linkimbo.util.ui.components.post.ActionRow
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceExtraSmall
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
@@ -37,12 +37,13 @@ import com.anthonylldev.linkimbo.util.ui.theme.UnselectedIcons
 fun PostDetailScreen(
     navController: NavController,
     post: Post = Post(
-        username = "Anthony Leon",
-        profilePictureUrl = "",
-        imageUrl = "",
+        id = "",
+        userId = "",
+        imageBase64 = "",
         description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula dapibus dolor, at mollis ex hendrerit a. Sed a nulla vel velit sollicitudin ultricies imperdiet sit amet magna. Morbi maximus enim sit amet nisl tempus luctus. Nulla malesuada quis diam id imperdiet. Duis efficitur sodales metus, dapibus ornare neque dignissim eget. Nulla quis tellus ex. Mauris egestas mattis leo, sed pellentesque odio condimentum sit amet. Mauris dictum turpis in urna interdum, id auctor sem imperdiet.",
         likeCount = 10,
-        commentCount = 3
+        commentCount = 3,
+        timestamp = 1
     )
 ) {
     Column(
@@ -85,7 +86,7 @@ fun PostDetailScreen(
 
                         Column {
                             ActionRow(
-                                username = post.username,
+                                username = post.userId,
                                 modifier = Modifier.fillMaxWidth(),
                                 onLikeClick = { isLiked ->
 

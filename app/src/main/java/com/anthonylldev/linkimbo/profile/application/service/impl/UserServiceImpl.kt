@@ -2,16 +2,15 @@ package com.anthonylldev.linkimbo.profile.application.service.impl
 
 import android.content.SharedPreferences
 import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.authentication.infrastructure.AuthenticationRestController
-import com.anthonylldev.linkimbo.profile.application.service.ProfileService
+import com.anthonylldev.linkimbo.profile.application.service.UserService
 import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
-import com.anthonylldev.linkimbo.profile.infrastructure.ProfileRestController
+import com.anthonylldev.linkimbo.profile.infrastructure.UserRestController
 import com.anthonylldev.linkimbo.util.Constants
 
-class ProfileServiceImpl(
-    private val api: ProfileRestController,
+class UserServiceImpl(
+    private val api: UserRestController,
     private val sharedPreferences: SharedPreferences
-) : ProfileService {
+) : UserService {
 
     override suspend fun loadProfile(
         userId: String
@@ -32,17 +31,17 @@ class ProfileServiceImpl(
         }
     }
 
-    override suspend fun getUser(): User {
+    override suspend fun getUserById(userId: String): User {
         try {
-            return this.api.getUser()
+            return this.api.getUserById(userId)
         } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun updateUser(user: User) {
+    override suspend fun updateUserById(user: User, userId: String) {
         try {
-            this.api.updateUser(user)
+            this.api.updateUserById(user, userId)
         } catch (e: Exception) {
             throw e
         }

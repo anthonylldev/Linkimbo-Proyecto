@@ -1,5 +1,9 @@
 package com.anthonylldev.linkimbo.post.domain.presentation.create_post
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +16,8 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -23,12 +29,36 @@ import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 
 @Composable
 fun CreatePostScreen(
     navController: NavController,
     createPostViewModel: CreatePostViewModel = hiltViewModel()
 ) {
+
+    val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // use the cropped image
+            createPostViewModel.setImageUriState(result.uriContent)
+        } else {
+            // an error occurred cropping
+            val exception = result.error
+        }
+    }
+
+    val imagePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        val cropOptions = CropImageContractOptions(uri, CropImageOptions())
+        cropOptions.setMinCropResultSize(1920, 1080)
+        cropOptions.setMaxCropResultSize(3996, 2160)
+        cropOptions.setRequestedSize(4320, 2264)
+        cropOptions.setAspectRatio(16,9)
+        cropOptions.setFixAspectRatio(true)
+        imageCropLauncher.launch(cropOptions)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +76,7 @@ fun CreatePostScreen(
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .clickable {
-                            /*TODO(Create post)*/
+                            createPostViewModel.saveImage()
                         }
                 )
             }
@@ -67,15 +97,21 @@ fun CreatePostScreen(
                         shape = MaterialTheme.shapes.medium
                     )
                     .clickable {
-                        /*TODO(Add image post)*/
+                        imagePickerLauncher.launch("image/*")
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.create_post),
-                    tint = MaterialTheme.colors.onBackground
-                )
+                if (createPostViewModel.bitmap.value == null) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(id = R.string.create_post),
+                        tint = MaterialTheme.colors.onBackground
+                    )
+                } else {
+                    Image(
+                        bitmap = createPostViewModel.bitmap.value!!.asImageBitmap(),
+                        contentDescription = null)
+                }
             }
 
             Spacer(modifier = Modifier.height(SpaceMedium))
@@ -89,7 +125,7 @@ fun CreatePostScreen(
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        /*TODO(Create POST)*/
+                        createPostViewModel.saveImage()
                     }
                 ),
                 imeAction = ImeAction.Done

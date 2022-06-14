@@ -1,10 +1,11 @@
 package com.anthonylldev.linkimbo.post.domain.model
 
 data class Post(
-    val username: String,
-    val profilePictureUrl: String,
-    val imageUrl: String,
+    val id: String? = null,
+    val userId: String,
+    val imageBase64: String,
     val description: String,
-    val likeCount: Int,
-    val commentCount: Int
+    val likeCount: Int = 0,
+    val commentCount: Int = 0,
+    val timestamp: Long
 )
