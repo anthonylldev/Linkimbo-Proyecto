@@ -16,9 +16,17 @@ class PostServiceImpl(
         }
     }
 
+    override suspend fun getPost(postId: String): Post {
+        try {
+            return this.api.getPost(postId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override suspend fun getAllPostSortByTimestamp(): List<Post> {
         try {
-            return this.api.getPost()
+            return this.api.getAllPosts()
         } catch (e: Exception) {
             throw e
         }

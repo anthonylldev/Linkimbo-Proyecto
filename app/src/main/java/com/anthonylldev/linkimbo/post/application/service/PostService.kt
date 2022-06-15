@@ -7,4 +7,6 @@ interface PostService {
     suspend fun insertPost(request: Post)
 
     suspend fun getAllPostSortByTimestamp(): List<Post>
+
+    suspend fun getPost(postId: String): Post
 }

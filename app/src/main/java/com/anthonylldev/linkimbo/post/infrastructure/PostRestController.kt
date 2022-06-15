@@ -14,6 +14,11 @@ interface PostRestController {
     )
 
     @GET("/post")
-    suspend fun getPost(): List<Post>
+    suspend fun getAllPosts(): List<Post>
+
+    @GET("/post/{postId}")
+    suspend fun getPost(
+        @Path("postId") postId: String
+    ): Post
 
 }

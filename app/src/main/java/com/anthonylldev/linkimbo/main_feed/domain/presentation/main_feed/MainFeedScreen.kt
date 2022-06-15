@@ -52,8 +52,7 @@ fun MainFeedScreen(
             items(viewModel.allPosts.value) { post ->
                 Post(
                     post = post,
-                    navController = navController,
-                    onPostClick = { navController.navigate(Screen.PostDetailScreen.route) }
+                    navController = navController
                 )
             }
 
