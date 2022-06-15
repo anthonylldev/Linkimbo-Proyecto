@@ -1,7 +1,7 @@
 package com.anthonylldev.linkimbo.profile.infrastructure
 
 import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
+import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT

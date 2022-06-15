@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anthonylldev.linkimbo.authentication.application.dto.LoginDto
+import com.anthonylldev.linkimbo.authentication.application.data.LoginRequest
 import com.anthonylldev.linkimbo.authentication.application.service.AuthenticationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -46,12 +46,12 @@ class LoginViewModel @Inject constructor(
         _displayProgressBar.value = true
         viewModelScope.launch {
 
-            val loginDto = LoginDto(
+            val loginRequest = LoginRequest(
                 username = usernameText.value,
                 password = passwordText.value
             )
             try {
-                authenticationService.login(request = loginDto)
+                authenticationService.login(request = loginRequest)
 
                 authenticationService.authenticate()
 

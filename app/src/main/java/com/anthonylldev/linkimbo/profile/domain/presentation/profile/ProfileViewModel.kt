@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anthonylldev.linkimbo.profile.application.service.UserService
-import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
+import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

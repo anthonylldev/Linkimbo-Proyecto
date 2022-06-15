@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.profile.domain.model
+package com.anthonylldev.linkimbo.profile.application.data
 
 data class ProfileResponse(
     val userId: String,

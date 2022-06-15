@@ -3,7 +3,7 @@ package com.anthonylldev.linkimbo.profile.application.service.impl
 import android.content.SharedPreferences
 import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.profile.application.service.UserService
-import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
+import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 import com.anthonylldev.linkimbo.profile.infrastructure.UserRestController
 import com.anthonylldev.linkimbo.util.Constants
 

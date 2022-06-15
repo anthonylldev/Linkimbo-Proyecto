@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ImageUtil
@@ -44,7 +45,7 @@ import com.anthonylldev.linkimbo.util.ui.theme.*
 @Composable
 fun Post(
     modifier: Modifier = Modifier,
-    post: Post,
+    post: PostResponse,
     navController: NavController,
     postViewModel: PostViewModel = hiltViewModel(),
     showProfileImage: Boolean = true
@@ -97,7 +98,8 @@ fun Post(
                     username = post.user.username,
                     onUsernameClick = {
                         navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
-                    }
+                    },
+                    isLiked = post.isLiked
                 )
                 Spacer(modifier = Modifier.height(SpaceSmall))
                 Text(
@@ -178,7 +180,7 @@ fun Post(
 fun EngagementButtons(
     modifier: Modifier = Modifier,
     isInPostDetail: Boolean,
-    isLiked: Boolean = false,
+    isLiked: Boolean,
     iconSize: Dp = 30.dp,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
@@ -254,7 +256,7 @@ fun EngagementButtons(
 fun ActionRow(
     modifier: Modifier = Modifier,
     isInPostDetail: Boolean = false,
-    isLiked: Boolean = false,
+    isLiked: Boolean,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},

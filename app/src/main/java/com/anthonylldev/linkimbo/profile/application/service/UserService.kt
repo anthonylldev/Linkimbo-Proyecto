@@ -1,7 +1,7 @@
 package com.anthonylldev.linkimbo.profile.application.service
 
 import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
+import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 
 interface UserService {
 

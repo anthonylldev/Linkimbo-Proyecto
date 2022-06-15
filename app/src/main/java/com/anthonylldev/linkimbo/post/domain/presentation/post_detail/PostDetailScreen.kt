@@ -98,7 +98,8 @@ fun PostDetailScreen(
                                     },
                                     onUsernameClick = {
                                         navController.navigate(Screen.ProfileScreen.route + "?userId=${postDetailViewModel.post.value!!.user.id}")
-                                    }
+                                    },
+                                    isLiked = postDetailViewModel.post.value!!.isLiked
                                 )
                                 Spacer(modifier = Modifier.height(SpaceSmall))
                                 Text(
