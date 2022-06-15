@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.util.ui.components.post.Post
+import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.Post
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.theme.*
@@ -52,6 +52,7 @@ fun MainFeedScreen(
             items(viewModel.allPosts.value) { post ->
                 Post(
                     post = post,
+                    navController = navController,
                     onPostClick = { navController.navigate(Screen.PostDetailScreen.route) }
                 )
             }

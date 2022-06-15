@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.util.ui.components.post
+package com.anthonylldev.linkimbo.post.domain.presentation.post_simple
 
 
 import androidx.compose.foundation.Image
@@ -34,10 +34,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ImageUtil
+import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.theme.*
 
 
@@ -45,13 +47,11 @@ import com.anthonylldev.linkimbo.util.ui.theme.*
 fun Post(
     modifier: Modifier = Modifier,
     post: Post,
+    navController: NavController,
     viewModel: PostViewModel = hiltViewModel(),
     showProfileImage: Boolean = true,
     onPostClick: () -> Unit = {},
 ) {
-
-    viewModel.loadUsername(post.userId)
-
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -87,7 +87,7 @@ fun Post(
                     .padding(SpaceMedium)
             ) {
                 ActionRow(
-                    username = viewModel.ownerPostUsername.value,
+                    username = post.user.username,
                     modifier = Modifier.fillMaxWidth(),
                     onLikeClick = { isLiked ->
 
@@ -98,8 +98,8 @@ fun Post(
                     onShareClick = {
 
                     },
-                    onUsernameClick = { username ->
-
+                    onUsernameClick = {
+                        navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
                     }
                 )
                 Spacer(modifier = Modifier.height(SpaceSmall))
@@ -154,9 +154,9 @@ fun Post(
             }
         }
         if (showProfileImage) {
-            if (viewModel.ownerPostProfilePicture.value != null) {
+            if (post.user.imageBase64 != null) {
                 Image(
-                    bitmap = ImageUtil.base64ToBitmap(viewModel.ownerPostProfilePicture.value!!)!!.asImageBitmap(),
+                    bitmap = ImageUtil.base64ToBitmap(post.user.imageBase64!!)!!.asImageBitmap(),
                     contentDescription = "Profile picture",
                     modifier = Modifier
                         .size(ProfileSize)
@@ -248,7 +248,7 @@ fun ActionRow(
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
     username: String,
-    onUsernameClick: (String) -> Unit = {}
+    onUsernameClick: () -> Unit = {}
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -263,7 +263,7 @@ fun ActionRow(
             ),
             modifier = Modifier
                 .clickable {
-                    onUsernameClick(username)
+                    onUsernameClick()
                 }
         )
         EngagementButtons(
