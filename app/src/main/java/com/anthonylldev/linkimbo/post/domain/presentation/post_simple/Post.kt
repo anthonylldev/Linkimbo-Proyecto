@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,18 +38,21 @@ import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.domain.model.Post
+import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
 import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.theme.*
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun Post(
     modifier: Modifier = Modifier,
     post: PostResponse,
     navController: NavController,
-    postViewModel: PostViewModel = hiltViewModel(),
-    showProfileImage: Boolean = true
+    showProfileImage: Boolean = true,
+    onUsernameClick: () -> Unit,
+    onLikeClick: (Boolean) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -86,9 +90,7 @@ fun Post(
             ) {
                 ActionRow(
                     modifier = Modifier.fillMaxWidth(),
-                    onLikeClick = { isLiked ->
-
-                    },
+                    onLikeClick = onLikeClick,
                     onCommentClick = {
 
                     },
@@ -96,9 +98,7 @@ fun Post(
 
                     },
                     username = post.user.username,
-                    onUsernameClick = {
-                        navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
-                    },
+                    onUsernameClick = onUsernameClick,
                     isLiked = post.isLiked
                 )
                 Spacer(modifier = Modifier.height(SpaceSmall))

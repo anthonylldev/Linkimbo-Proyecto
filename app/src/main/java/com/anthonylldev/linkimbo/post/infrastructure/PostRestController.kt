@@ -1,5 +1,6 @@
 package com.anthonylldev.linkimbo.post.infrastructure
 
+import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.domain.model.Post
@@ -12,7 +13,13 @@ interface PostRestController {
 
     @POST("/post")
     suspend fun createPost(
-        @Body post: PostRequest
+        @Body postRequest: PostRequest
+    )
+
+    @POST("/post/{postId}/like")
+    suspend fun like(
+        @Path("postId") postId: String,
+        @Body postLikeRequest: PostLikeRequest
     )
 
     @GET("/post")

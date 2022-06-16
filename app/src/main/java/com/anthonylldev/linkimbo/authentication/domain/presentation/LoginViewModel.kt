@@ -84,4 +84,8 @@ class LoginViewModel @Inject constructor(
     fun setPasswordVisibility(visibility: Boolean) {
         _passwordVisibility.value = visibility
     }
+
+    fun setDisplayProgressBar(state: Boolean) {
+        _displayProgressBar.value = state
+    }
 }

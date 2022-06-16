@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.domain.model.Comment
+import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.ActionRow
 import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.navigation.Screen
@@ -32,6 +34,7 @@ import com.anthonylldev.linkimbo.util.ui.theme.SpaceExtraSmall
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceSmall
 import com.anthonylldev.linkimbo.util.ui.theme.UnselectedIcons
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PostDetailScreen(
@@ -41,7 +44,15 @@ fun PostDetailScreen(
 ) {
 
     postDetailViewModel.loadPost(postId)
-
+    
+    LaunchedEffect(key1 = true) {
+        postDetailViewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is PostEvent.Like -> postDetailViewModel.loadPost(postId)
+            }
+        }
+    }
+    
     if (postDetailViewModel.post.value != null) {
         Column(
             modifier = Modifier
@@ -88,7 +99,11 @@ fun PostDetailScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                     isInPostDetail = true,
                                     onLikeClick = { isLiked ->
-
+                                        if (isLiked) {
+                                            postDetailViewModel.like()
+                                        } else {
+                                            postDetailViewModel.unLike()
+                                        }
                                     },
                                     onCommentClick = {
 

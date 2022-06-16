@@ -4,10 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.model.Post
+import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,10 +22,31 @@ class PostDetailViewModel @Inject constructor(
     private val _post = mutableStateOf<PostResponse?>(null)
     val post: State<PostResponse?> = _post
 
+    private val _eventFlow = MutableSharedFlow<PostEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     fun loadPost(postId: String?) {
         postId?.let {
             viewModelScope.launch {
                 _post.value = postService.getPost(it)
+            }
+        }
+    }
+
+    fun like() {
+        viewModelScope.launch {
+            if(_post.value?.id != null) {
+                postService.likePost(_post.value!!.id!!, PostLikeRequest(true))
+                _eventFlow.emit(PostEvent.Like)
+            }
+        }
+    }
+
+    fun unLike() {
+        viewModelScope.launch {
+            if(_post.value?.id != null) {
+                postService.likePost(_post.value!!.id!!, PostLikeRequest(false))
+                _eventFlow.emit(PostEvent.Like)
             }
         }
     }
