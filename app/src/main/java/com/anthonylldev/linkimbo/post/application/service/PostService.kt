@@ -1,10 +1,16 @@
 package com.anthonylldev.linkimbo.post.application.service
 
-import com.anthonylldev.linkimbo.post.domain.model.Post
+import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
+import com.anthonylldev.linkimbo.post.application.data.PostRequest
+import com.anthonylldev.linkimbo.post.application.data.PostResponse
 
 interface PostService {
 
-    suspend fun insertPost(request: Post)
+    suspend fun insertPost(request: PostRequest)
 
-    suspend fun getAllPostSortByTimestamp(): List<Post>
+    suspend fun getAllPostSortByTimestamp(): List<PostResponse>
+
+    suspend fun getPost(postId: String): PostResponse
+
+    suspend fun likePost(postId: String, request: PostLikeRequest)
 }

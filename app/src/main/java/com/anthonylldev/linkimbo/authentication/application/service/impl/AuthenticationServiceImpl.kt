@@ -1,11 +1,10 @@
 package com.anthonylldev.linkimbo.authentication.application.service.impl
 
 import android.content.SharedPreferences
-import androidx.core.content.edit
 import com.anthonylldev.linkimbo.authentication.application.service.AuthenticationService
-import com.anthonylldev.linkimbo.authentication.application.dto.CreateAccountDto
-import com.anthonylldev.linkimbo.authentication.application.dto.LoginDto
-import com.anthonylldev.linkimbo.authentication.application.dto.TokenDto
+import com.anthonylldev.linkimbo.authentication.application.data.CreateAccountRequest
+import com.anthonylldev.linkimbo.authentication.application.data.LoginRequest
+import com.anthonylldev.linkimbo.authentication.application.data.TokenResponse
 import com.anthonylldev.linkimbo.authentication.infrastructure.AuthenticationRestController
 import com.anthonylldev.linkimbo.util.Constants
 
@@ -14,7 +13,7 @@ class AuthenticationServiceImpl(
     private val sharedPreferences: SharedPreferences
 ) : AuthenticationService {
 
-    override suspend fun createAccount(request: CreateAccountDto): TokenDto {
+    override suspend fun createAccount(request: CreateAccountRequest): TokenResponse {
         try {
             val response = api.createAccount(request)
 
@@ -39,7 +38,7 @@ class AuthenticationServiceImpl(
         }
     }
 
-    override suspend fun login(request: LoginDto): TokenDto {
+    override suspend fun login(request: LoginRequest): TokenResponse {
         try {
             val response = api.login(request)
 

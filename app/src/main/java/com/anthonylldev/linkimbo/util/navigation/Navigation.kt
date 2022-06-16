@@ -66,9 +66,19 @@ fun Navigation(
         }
 
         composable(
-            Screen.PostDetailScreen.route
+            route = Screen.PostDetailScreen.route + "?postId={postId}",
+            arguments = listOf(
+                navArgument(name = "postId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = ""
+                }
+            )
         ) {
-            PostDetailScreen(navController = navController)
+            PostDetailScreen(
+                navController = navController,
+                postId = it.arguments?.getString("postId")
+            )
         }
 
         composable(

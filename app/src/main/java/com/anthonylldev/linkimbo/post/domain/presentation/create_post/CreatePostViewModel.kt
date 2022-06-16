@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anthonylldev.linkimbo.authentication.domain.model.User
+import com.anthonylldev.linkimbo.post.application.data.PostRequest
 import com.anthonylldev.linkimbo.post.application.service.PostService
 import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.util.Constants
@@ -72,13 +73,8 @@ class CreatePostViewModel @Inject constructor(
 
                 if (image != null) {
                     postService.insertPost(
-                        Post(
-                            user = User(
-                                id = userId,
-                                "",
-                                "",
-                                ""
-                            ),
+                        PostRequest(
+                            userId = userId,
                             imageBase64 = image,
                             description = _postDetail.value.text,
                             timestamp = timestamp

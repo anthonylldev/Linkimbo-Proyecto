@@ -5,8 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anthonylldev.linkimbo.authentication.application.dto.CreateAccountDto
-import com.anthonylldev.linkimbo.authentication.application.dto.TokenDto
+import com.anthonylldev.linkimbo.authentication.application.data.CreateAccountRequest
 import com.anthonylldev.linkimbo.authentication.application.service.AuthenticationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,7 +52,7 @@ class CreateAccountViewModel @Inject constructor(
         _displayProgressBar.value = true
         viewModelScope.launch {
 
-            val createAccountDto = CreateAccountDto(
+            val createAccountRequest = CreateAccountRequest(
                 username = usernameText.value,
                 email = emailText.value,
                 password = passwordText.value
@@ -61,7 +60,7 @@ class CreateAccountViewModel @Inject constructor(
 
             try {
                 authenticationService.createAccount(
-                    request = createAccountDto
+                    request = createAccountRequest
                 ).token
 
                 authenticationService.authenticate()

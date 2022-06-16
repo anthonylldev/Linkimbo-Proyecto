@@ -15,8 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.profile.domain.model.ProfileResponse
+import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
 import com.anthonylldev.linkimbo.util.ui.theme.ProfileSize

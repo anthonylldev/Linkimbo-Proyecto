@@ -1,6 +1,5 @@
 package com.anthonylldev.linkimbo.post.domain.presentation.post_simple
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +14,7 @@ import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,21 +36,23 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.domain.model.Post
+import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
 import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.theme.*
-
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun Post(
     modifier: Modifier = Modifier,
-    post: Post,
+    post: PostResponse,
     navController: NavController,
-    viewModel: PostViewModel = hiltViewModel(),
     showProfileImage: Boolean = true,
-    onPostClick: () -> Unit = {},
+    onUsernameClick: () -> Unit,
+    onLikeClick: (Boolean) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -74,7 +76,7 @@ fun Post(
                 .shadow(5.dp)
                 .background(Color.LightGray)
                 .clickable {
-                    onPostClick()
+                    navController.navigate(Screen.PostDetailScreen.route + "?postId=${post.id}")
                 }
         ) {
             Image(
@@ -87,20 +89,17 @@ fun Post(
                     .padding(SpaceMedium)
             ) {
                 ActionRow(
-                    username = post.user.username,
                     modifier = Modifier.fillMaxWidth(),
-                    onLikeClick = { isLiked ->
-
-                    },
+                    onLikeClick = onLikeClick,
                     onCommentClick = {
 
                     },
                     onShareClick = {
 
                     },
-                    onUsernameClick = {
-                        navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
-                    }
+                    username = post.user.username,
+                    onUsernameClick = onUsernameClick,
+                    isLiked = post.isLiked
                 )
                 Spacer(modifier = Modifier.height(SpaceSmall))
                 Text(
@@ -180,7 +179,8 @@ fun Post(
 @Composable
 fun EngagementButtons(
     modifier: Modifier = Modifier,
-    isLiked: Boolean = false,
+    isInPostDetail: Boolean,
+    isLiked: Boolean,
     iconSize: Dp = 30.dp,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
@@ -202,7 +202,11 @@ fun EngagementButtons(
                 tint = if (isLiked) {
                     Color.Red
                 } else {
-                    UnselectedIcons
+                    if (isInPostDetail) {
+                        MaterialTheme.colors.onBackground
+                    } else {
+                        UnselectedIcons
+                    }
                 },
                 contentDescription = if (isLiked) {
                     stringResource(id = R.string.unlike)
@@ -221,7 +225,11 @@ fun EngagementButtons(
             Icon(
                 imageVector = Icons.Filled.Comment,
                 contentDescription = stringResource(id = R.string.comment),
-                tint = UnselectedIcons
+                tint = if (isInPostDetail) {
+                    MaterialTheme.colors.onBackground
+                } else {
+                    UnselectedIcons
+                }
             )
         }
         Spacer(modifier = Modifier.width(SpaceMedium))
@@ -234,7 +242,11 @@ fun EngagementButtons(
             Icon(
                 imageVector = Icons.Filled.Share,
                 contentDescription = stringResource(id = R.string.share),
-                tint = UnselectedIcons
+                tint = if (isInPostDetail) {
+                    MaterialTheme.colors.onBackground
+                } else {
+                    UnselectedIcons
+                }
             )
         }
     }
@@ -243,7 +255,8 @@ fun EngagementButtons(
 @Composable
 fun ActionRow(
     modifier: Modifier = Modifier,
-    isLiked: Boolean = false,
+    isInPostDetail: Boolean = false,
+    isLiked: Boolean,
     onLikeClick: (Boolean) -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
@@ -267,6 +280,7 @@ fun ActionRow(
                 }
         )
         EngagementButtons(
+            isInPostDetail = isInPostDetail,
             isLiked = isLiked,
             onLikeClick = onLikeClick,
             onCommentClick = onCommentClick,
