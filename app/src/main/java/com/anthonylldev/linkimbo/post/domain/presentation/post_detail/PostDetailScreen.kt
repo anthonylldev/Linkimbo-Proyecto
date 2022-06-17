@@ -106,7 +106,7 @@ fun PostDetailScreen(
                                         }
                                     },
                                     onCommentClick = {
-
+                                        navController.navigate(Screen.CommentPostScreen.route + "?postId=${postDetailViewModel.post.value!!.id}")
                                     },
                                     onShareClick = {
 
@@ -137,7 +137,7 @@ fun PostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 16.sp,
                                         style = MaterialTheme.typography.h2,
-                                        color = Color.Black
+                                        color = MaterialTheme.colors.onBackground
                                     )
                                     Text(
                                         text = stringResource(
@@ -147,7 +147,7 @@ fun PostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 16.sp,
                                         style = MaterialTheme.typography.h2,
-                                        color = Color.Black
+                                        color = MaterialTheme.colors.onBackground
                                     )
                                 }
                             }

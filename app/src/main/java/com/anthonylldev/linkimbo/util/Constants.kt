@@ -8,4 +8,5 @@ object Constants {
     const val SPLASH_SCREEN_DURATION = 1500L
     const val MAX_POST_DESCRIPTION_LINES = 3
     const val BASE_URL = "http://192.168.1.216:8080"
+    //const val BASE_URL = "http://10.0.2.2:8080"
 }

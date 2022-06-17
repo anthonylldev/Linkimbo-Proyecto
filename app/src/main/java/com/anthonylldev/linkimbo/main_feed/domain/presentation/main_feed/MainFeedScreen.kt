@@ -70,13 +70,14 @@ fun MainFeedScreen(
                         navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
                     },
                     onLikeClick = { isLiked ->
-
                         if (isLiked && post.id != null) {
                             mainFeedViewModel.like(post.id)
                         } else if (post.id != null) {
                             mainFeedViewModel.unLike(post.id)
                         }
-
+                    },
+                    onCommentClick = {
+                        navController.navigate(Screen.CommentPostScreen.route + "?postId=${post.id}")
                     }
                 )
             }

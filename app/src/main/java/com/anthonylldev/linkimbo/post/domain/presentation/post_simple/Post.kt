@@ -52,7 +52,8 @@ fun Post(
     navController: NavController,
     showProfileImage: Boolean = true,
     onUsernameClick: () -> Unit,
-    onLikeClick: (Boolean) -> Unit
+    onLikeClick: (Boolean) -> Unit,
+    onCommentClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -91,9 +92,7 @@ fun Post(
                 ActionRow(
                     modifier = Modifier.fillMaxWidth(),
                     onLikeClick = onLikeClick,
-                    onCommentClick = {
-
-                    },
+                    onCommentClick = onCommentClick,
                     onShareClick = {
 
                     },

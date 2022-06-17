@@ -14,6 +14,7 @@ import com.anthonylldev.linkimbo.post.domain.presentation.create_post.CreatePost
 import com.anthonylldev.linkimbo.main_feed.domain.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.authentication.domain.presentation.screen.AuthScreen
 import com.anthonylldev.linkimbo.chat.domain.presentation.ChatScreen
+import com.anthonylldev.linkimbo.post.domain.presentation.comment_post.CommentPostScreen
 import com.anthonylldev.linkimbo.profile.domain.presentation.edit_profile.EditProfileScreen
 import com.anthonylldev.linkimbo.post.domain.presentation.post_detail.PostDetailScreen
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.ProfileScreen
@@ -76,6 +77,22 @@ fun Navigation(
             )
         ) {
             PostDetailScreen(
+                navController = navController,
+                postId = it.arguments?.getString("postId")
+            )
+        }
+
+        composable(
+            route = Screen.CommentPostScreen.route + "?postId={postId}",
+            arguments = listOf(
+                navArgument(name = "postId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = ""
+                }
+            )
+        ) {
+            CommentPostScreen(
                 navController = navController,
                 postId = it.arguments?.getString("postId")
             )
