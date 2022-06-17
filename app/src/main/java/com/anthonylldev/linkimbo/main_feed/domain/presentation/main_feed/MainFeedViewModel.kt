@@ -4,14 +4,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
+import com.anthonylldev.linkimbo.post.application.data.LikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.model.Post
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
-import com.anthonylldev.linkimbo.profile.application.service.UserService
+import com.anthonylldev.linkimbo.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,7 +22,7 @@ class MainFeedViewModel @Inject constructor(
     private val _allPosts = mutableStateOf(emptyList<PostResponse>())
     val allPosts: State<List<PostResponse>> = _allPosts
 
-    private val _eventFlow = MutableSharedFlow<PostEvent>()
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
@@ -42,15 +38,15 @@ class MainFeedViewModel @Inject constructor(
 
     fun like(postId: String) {
         viewModelScope.launch {
-            postService.likePost(postId, PostLikeRequest(true))
-            _eventFlow.emit(PostEvent.Like)
+            postService.likePost(postId, LikeRequest(true))
+            _eventFlow.emit(UiEvent.Like)
         }
     }
 
     fun unLike(postId: String) {
         viewModelScope.launch {
-            postService.likePost(postId, PostLikeRequest(false))
-            _eventFlow.emit(PostEvent.Like)
+            postService.likePost(postId, LikeRequest(false))
+            _eventFlow.emit(UiEvent.Like)
         }
     }
 }

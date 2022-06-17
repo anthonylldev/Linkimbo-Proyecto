@@ -1,10 +1,7 @@
 package com.anthonylldev.linkimbo.post.application.service.impl
 
-import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
-import com.anthonylldev.linkimbo.post.application.data.PostRequest
-import com.anthonylldev.linkimbo.post.application.data.PostResponse
+import com.anthonylldev.linkimbo.post.application.data.*
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.post.infrastructure.PostRestController
 
 class PostServiceImpl(
@@ -27,6 +24,30 @@ class PostServiceImpl(
         }
     }
 
+    override suspend fun commentPost(postId: String, request: PostCommentRequest) {
+        try {
+            return this.api.comment(postId, request)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun getAllCommentsByPostId(postId: String): List<PostCommentResponse> {
+        try {
+            return this.api.getAllComments(postId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun likePostComment(postId: String, commentId: String, request: LikeRequest) {
+        try {
+            return this.api.likeComment(postId, commentId, request)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override suspend fun getAllPostSortByTimestamp(): List<PostResponse> {
         try {
             return this.api.getAllPosts()
@@ -35,7 +56,7 @@ class PostServiceImpl(
         }
     }
 
-    override suspend fun likePost(postId: String, request: PostLikeRequest) {
+    override suspend fun likePost(postId: String, request: LikeRequest) {
         try {
             this.api.like(postId, request)
         } catch (e: Exception) {

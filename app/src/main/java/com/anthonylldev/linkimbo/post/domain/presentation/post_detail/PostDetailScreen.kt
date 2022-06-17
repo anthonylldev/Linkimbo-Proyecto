@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -18,15 +20,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.post.domain.model.Comment
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
+import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
+import com.anthonylldev.linkimbo.util.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.ActionRow
+import com.anthonylldev.linkimbo.util.DateFormatUtil
 import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
@@ -43,17 +49,25 @@ fun PostDetailScreen(
     postDetailViewModel: PostDetailViewModel = hiltViewModel()
 ) {
 
-    postDetailViewModel.loadPost(postId)
-    
-    LaunchedEffect(key1 = true) {
-        postDetailViewModel.eventFlow.collectLatest { event ->
-            when(event) {
-                is PostEvent.Like -> postDetailViewModel.loadPost(postId)
+    postId?.let {
+        postDetailViewModel.loadPost(postId)
+        postDetailViewModel.loadComments(postId)
+    }
+
+    if (postDetailViewModel.post.value != null) {
+
+
+        LaunchedEffect(key1 = true) {
+            postDetailViewModel.eventFlow.collectLatest { event ->
+                when (event) {
+                    is UiEvent.Like -> {
+                        postDetailViewModel.loadPost(postDetailViewModel.post.value!!.id!!)
+                        postDetailViewModel.loadComments(postDetailViewModel.post.value!!.id!!)
+                    }
+                }
             }
         }
-    }
-    
-    if (postDetailViewModel.post.value != null) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,14 +113,10 @@ fun PostDetailScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                     isInPostDetail = true,
                                     onLikeClick = { isLiked ->
-                                        if (isLiked) {
-                                            postDetailViewModel.like()
-                                        } else {
-                                            postDetailViewModel.unLike()
-                                        }
+                                        postDetailViewModel.like(isLiked)
                                     },
                                     onCommentClick = {
-
+                                        navController.navigate(Screen.CommentPostScreen.route + "?postId=${postDetailViewModel.post.value!!.id}")
                                     },
                                     onShareClick = {
 
@@ -137,7 +147,7 @@ fun PostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 16.sp,
                                         style = MaterialTheme.typography.h2,
-                                        color = Color.Black
+                                        color = MaterialTheme.colors.onBackground
                                     )
                                     Text(
                                         text = stringResource(
@@ -147,7 +157,7 @@ fun PostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 16.sp,
                                         style = MaterialTheme.typography.h2,
-                                        color = Color.Black
+                                        color = MaterialTheme.colors.onBackground
                                     )
                                 }
                             }
@@ -155,8 +165,16 @@ fun PostDetailScreen(
                     }
                 }
 
-                items(20) {
-                    CommentLayout()
+                items(postDetailViewModel.allComments.value) { comment ->
+                    CommentLayout(
+                        comment = comment,
+                        onLikeClick = { isLiked ->
+                            postDetailViewModel.likeComment(comment.id, isLiked)
+                        },
+                        onUserClick = {
+                            navController.navigate(Screen.ProfileScreen.route + "?userId=${postDetailViewModel.post.value!!.user.id}")
+                        }
+                    )
                 }
             }
         }
@@ -166,7 +184,9 @@ fun PostDetailScreen(
 @Composable
 fun CommentLayout(
     modifier: Modifier = Modifier,
-    comment: Comment = Comment()
+    comment: PostCommentResponse,
+    onLikeClick: (Boolean) -> Unit,
+    onUserClick: () -> Unit
 ) {
     Card(
         modifier = modifier
@@ -181,13 +201,31 @@ fun CommentLayout(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.anthony_profile_square),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                )
+
+                if (comment.user.imageBase64 != null) {
+                    Image(
+                        bitmap = ImageUtil.base64ToBitmap(comment.user.imageBase64!!)!!
+                            .asImageBitmap(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .clickable {
+                                onUserClick()
+                            }
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.default_profile),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .clickable {
+                                onUserClick()
+                            }
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
@@ -198,9 +236,11 @@ fun CommentLayout(
                         tint = if (comment.isLiked) {
                             Color.Red
                         } else {
-                            UnselectedIcons
+                            MaterialTheme.colors.onBackground
                         },
-                        modifier = Modifier.clickable { /*TODO*/ }
+                        modifier = Modifier.clickable {
+                            onLikeClick(!comment.isLiked)
+                        }
                     )
 
                     Spacer(modifier = Modifier.width(SpaceSmall))
@@ -221,13 +261,16 @@ fun CommentLayout(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = comment.username,
+                        text = comment.user.username,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.body1,
                     )
 
                     Text(
-                        text = comment.timestamp.toString(),
+                        text = DateFormatUtil.timestampToFormattedString(
+                            timestamp = comment.timestamp,
+                            patter = "MMM dd HH:mm"
+                        ),
                     )
                 }
 
