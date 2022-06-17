@@ -1,10 +1,10 @@
 package com.anthonylldev.linkimbo.post.application.service.impl
 
+import com.anthonylldev.linkimbo.post.application.data.PostCommentRequest
 import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.model.Post
 import com.anthonylldev.linkimbo.post.infrastructure.PostRestController
 
 class PostServiceImpl(
@@ -22,6 +22,14 @@ class PostServiceImpl(
     override suspend fun getPost(postId: String): PostResponse {
         try {
             return this.api.getPost(postId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun commentPost(postId: String, request: PostCommentRequest) {
+        try {
+            return this.api.comment(postId, request)
         } catch (e: Exception) {
             throw e
         }

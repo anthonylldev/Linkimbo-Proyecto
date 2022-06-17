@@ -1,9 +1,9 @@
 package com.anthonylldev.linkimbo.post.infrastructure
 
+import com.anthonylldev.linkimbo.post.application.data.PostCommentRequest
 import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
-import com.anthonylldev.linkimbo.post.domain.model.Post
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -20,6 +20,12 @@ interface PostRestController {
     suspend fun like(
         @Path("postId") postId: String,
         @Body postLikeRequest: PostLikeRequest
+    )
+
+    @POST("/post/{postId}/comment")
+    suspend fun comment(
+        @Path("postId") postId: String,
+        @Body postCommentRequest: PostCommentRequest
     )
 
     @GET("/post")
