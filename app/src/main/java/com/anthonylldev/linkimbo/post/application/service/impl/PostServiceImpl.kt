@@ -40,6 +40,14 @@ class PostServiceImpl(
         }
     }
 
+    override suspend fun likePostComment(postId: String, commentId: String, request: LikeRequest) {
+        try {
+            return this.api.likeComment(postId, commentId, request)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override suspend fun getAllPostSortByTimestamp(): List<PostResponse> {
         try {
             return this.api.getAllPosts()
@@ -48,7 +56,7 @@ class PostServiceImpl(
         }
     }
 
-    override suspend fun likePost(postId: String, request: PostLikeRequest) {
+    override suspend fun likePost(postId: String, request: LikeRequest) {
         try {
             this.api.like(postId, request)
         } catch (e: Exception) {

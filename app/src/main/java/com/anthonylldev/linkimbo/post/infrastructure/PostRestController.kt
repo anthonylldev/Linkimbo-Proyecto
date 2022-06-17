@@ -16,13 +16,20 @@ interface PostRestController {
     @POST("/post/{postId}/like")
     suspend fun like(
         @Path("postId") postId: String,
-        @Body postLikeRequest: PostLikeRequest
+        @Body likeRequest: LikeRequest
     )
 
     @POST("/post/{postId}/comment")
     suspend fun comment(
         @Path("postId") postId: String,
         @Body postCommentRequest: PostCommentRequest
+    )
+
+    @POST("/post/{postId}/comment/{commentId}/like")
+    suspend fun likeComment(
+        @Path("postId") postId: String,
+        @Path("commentId") commentId: String,
+        @Body request: LikeRequest
     )
 
     @GET("/post")

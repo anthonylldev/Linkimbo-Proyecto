@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
+import com.anthonylldev.linkimbo.post.application.data.LikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
 import com.anthonylldev.linkimbo.util.UiEvent
@@ -38,14 +38,14 @@ class MainFeedViewModel @Inject constructor(
 
     fun like(postId: String) {
         viewModelScope.launch {
-            postService.likePost(postId, PostLikeRequest(true))
+            postService.likePost(postId, LikeRequest(true))
             _eventFlow.emit(UiEvent.Like)
         }
     }
 
     fun unLike(postId: String) {
         viewModelScope.launch {
-            postService.likePost(postId, PostLikeRequest(false))
+            postService.likePost(postId, LikeRequest(false))
             _eventFlow.emit(UiEvent.Like)
         }
     }

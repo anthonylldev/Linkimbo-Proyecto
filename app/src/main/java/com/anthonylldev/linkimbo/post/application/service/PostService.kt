@@ -10,9 +10,11 @@ interface PostService {
 
     suspend fun getPost(postId: String): PostResponse
 
-    suspend fun likePost(postId: String, request: PostLikeRequest)
+    suspend fun likePost(postId: String, request: LikeRequest)
 
     suspend fun commentPost(postId: String, request: PostCommentRequest)
 
     suspend fun getAllCommentsByPostId(postId: String): List<PostCommentResponse>
+
+    suspend fun likePostComment(postId: String, commentId: String, request: LikeRequest)
 }

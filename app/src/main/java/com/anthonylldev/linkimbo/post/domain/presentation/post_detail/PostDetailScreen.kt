@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -19,7 +20,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -56,7 +60,10 @@ fun PostDetailScreen(
         LaunchedEffect(key1 = true) {
             postDetailViewModel.eventFlow.collectLatest { event ->
                 when (event) {
-                    is UiEvent.Like -> postDetailViewModel.loadPost(postDetailViewModel.post.value!!.id!!)
+                    is UiEvent.Like -> {
+                        postDetailViewModel.loadPost(postDetailViewModel.post.value!!.id!!)
+                        postDetailViewModel.loadComments(postDetailViewModel.post.value!!.id!!)
+                    }
                 }
             }
         }
@@ -106,11 +113,7 @@ fun PostDetailScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                     isInPostDetail = true,
                                     onLikeClick = { isLiked ->
-                                        if (isLiked) {
-                                            postDetailViewModel.like()
-                                        } else {
-                                            postDetailViewModel.unLike()
-                                        }
+                                        postDetailViewModel.like(isLiked)
                                     },
                                     onCommentClick = {
                                         navController.navigate(Screen.CommentPostScreen.route + "?postId=${postDetailViewModel.post.value!!.id}")
@@ -163,7 +166,15 @@ fun PostDetailScreen(
                 }
 
                 items(postDetailViewModel.allComments.value) { comment ->
-                    CommentLayout(comment = comment)
+                    CommentLayout(
+                        comment = comment,
+                        onLikeClick = { isLiked ->
+                            postDetailViewModel.likeComment(comment.id, isLiked)
+                        },
+                        onUserClick = {
+                            navController.navigate(Screen.ProfileScreen.route + "?userId=${postDetailViewModel.post.value!!.user.id}")
+                        }
+                    )
                 }
             }
         }
@@ -173,7 +184,9 @@ fun PostDetailScreen(
 @Composable
 fun CommentLayout(
     modifier: Modifier = Modifier,
-    comment: PostCommentResponse
+    comment: PostCommentResponse,
+    onLikeClick: (Boolean) -> Unit,
+    onUserClick: () -> Unit
 ) {
     Card(
         modifier = modifier
@@ -197,6 +210,9 @@ fun CommentLayout(
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
+                            .clickable {
+                                onUserClick()
+                            }
                     )
                 } else {
                     Image(
@@ -205,6 +221,9 @@ fun CommentLayout(
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
+                            .clickable {
+                                onUserClick()
+                            }
                     )
                 }
 
@@ -217,9 +236,11 @@ fun CommentLayout(
                         tint = if (comment.isLiked) {
                             Color.Red
                         } else {
-                            UnselectedIcons
+                            MaterialTheme.colors.onBackground
                         },
-                        modifier = Modifier.clickable { /*TODO*/ }
+                        modifier = Modifier.clickable {
+                            onLikeClick(!comment.isLiked)
+                        }
                     )
 
                     Spacer(modifier = Modifier.width(SpaceSmall))

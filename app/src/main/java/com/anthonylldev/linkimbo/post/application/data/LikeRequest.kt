@@ -1,5 +1,5 @@
 package com.anthonylldev.linkimbo.post.application.data
 
-data class PostLikeRequest(
+data class LikeRequest(
     val isLiked: Boolean
 )

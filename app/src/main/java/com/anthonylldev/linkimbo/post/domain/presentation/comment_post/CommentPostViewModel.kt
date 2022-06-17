@@ -5,6 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anthonylldev.linkimbo.post.application.data.LikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostCommentRequest
 import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
@@ -57,6 +58,19 @@ class CommentPostViewModel @Inject constructor(
     fun loadComments(postId: String) {
         viewModelScope.launch {
             _allComments.value = postService.getAllCommentsByPostId(postId)
+        }
+    }
+
+    fun likeComment(postId: String?, commentId: String, isLiked: Boolean) {
+        viewModelScope.launch {
+            if (postId != null) {
+                postService.likePostComment(
+                    postId,
+                    commentId,
+                    LikeRequest(isLiked)
+                )
+                _eventFlow.emit(UiEvent.Like)
+            }
         }
     }
 }

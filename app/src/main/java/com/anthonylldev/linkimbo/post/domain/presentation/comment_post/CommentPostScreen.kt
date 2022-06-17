@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.util.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_detail.CommentLayout
+import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.components.CustomTextField
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
@@ -38,6 +39,7 @@ fun CommentPostScreen(
             commentPostViewModel.eventFlow.collectLatest { event ->
                 when (event) {
                     is UiEvent.Comment -> commentPostViewModel.loadComments(postId)
+                    is UiEvent.Like -> commentPostViewModel.loadComments(postId)
                 }
             }
         }
@@ -88,7 +90,15 @@ fun CommentPostScreen(
 
             LazyColumn {
                 items(commentPostViewModel.allComments.value) { comment ->
-                    CommentLayout(comment = comment)
+                    CommentLayout(
+                        comment = comment,
+                        onLikeClick = { isLiked ->
+                            commentPostViewModel.likeComment(postId, comment.id, isLiked)
+                        },
+                        onUserClick = {
+                            navController.navigate(Screen.ProfileScreen.route + "?userId=${comment.user.id}")
+                        }
+                    )
                 }
             }
         }
