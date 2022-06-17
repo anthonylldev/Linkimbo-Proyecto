@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -24,9 +25,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
+import com.anthonylldev.linkimbo.authentication.domain.model.User
+import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
 import com.anthonylldev.linkimbo.post.domain.model.Comment
 import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.ActionRow
+import com.anthonylldev.linkimbo.util.DateFormatUtil
 import com.anthonylldev.linkimbo.util.ImageUtil
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
@@ -43,17 +47,22 @@ fun PostDetailScreen(
     postDetailViewModel: PostDetailViewModel = hiltViewModel()
 ) {
 
-    postDetailViewModel.loadPost(postId)
-    
-    LaunchedEffect(key1 = true) {
-        postDetailViewModel.eventFlow.collectLatest { event ->
-            when(event) {
-                is PostEvent.Like -> postDetailViewModel.loadPost(postId)
+    postId?.let {
+        postDetailViewModel.loadPost(postId)
+        postDetailViewModel.loadComments(postId)
+    }
+
+    if (postDetailViewModel.post.value != null) {
+
+
+        LaunchedEffect(key1 = true) {
+            postDetailViewModel.eventFlow.collectLatest { event ->
+                when (event) {
+                    is PostEvent.Like -> postDetailViewModel.loadPost(postDetailViewModel.post.value!!.id!!)
+                }
             }
         }
-    }
-    
-    if (postDetailViewModel.post.value != null) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -155,8 +164,8 @@ fun PostDetailScreen(
                     }
                 }
 
-                items(20) {
-                    CommentLayout()
+                items(postDetailViewModel.allComments.value) { comment ->
+                    CommentLayout(comment = comment)
                 }
             }
         }
@@ -166,7 +175,7 @@ fun PostDetailScreen(
 @Composable
 fun CommentLayout(
     modifier: Modifier = Modifier,
-    comment: Comment = Comment()
+    comment: PostCommentResponse
 ) {
     Card(
         modifier = modifier
@@ -181,13 +190,25 @@ fun CommentLayout(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.anthony_profile_square),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                )
+
+                if (comment.user.imageBase64 != null) {
+                    Image(
+                        bitmap = ImageUtil.base64ToBitmap(comment.user.imageBase64!!)!!
+                            .asImageBitmap(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.default_profile),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(SpaceMedium))
 
@@ -221,13 +242,16 @@ fun CommentLayout(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = comment.username,
+                        text = comment.user.username,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.body1,
                     )
 
                     Text(
-                        text = comment.timestamp.toString(),
+                        text = DateFormatUtil.timestampToFormattedString(
+                            timestamp = comment.timestamp,
+                            patter = "MMM dd HH:mm"
+                        ),
                     )
                 }
 

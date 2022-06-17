@@ -1,9 +1,6 @@
 package com.anthonylldev.linkimbo.post.application.service
 
-import com.anthonylldev.linkimbo.post.application.data.PostCommentRequest
-import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
-import com.anthonylldev.linkimbo.post.application.data.PostRequest
-import com.anthonylldev.linkimbo.post.application.data.PostResponse
+import com.anthonylldev.linkimbo.post.application.data.*
 
 interface PostService {
 
@@ -16,4 +13,6 @@ interface PostService {
     suspend fun likePost(postId: String, request: PostLikeRequest)
 
     suspend fun commentPost(postId: String, request: PostCommentRequest)
+
+    suspend fun getAllCommentsByPostId(postId: String): List<PostCommentResponse>
 }

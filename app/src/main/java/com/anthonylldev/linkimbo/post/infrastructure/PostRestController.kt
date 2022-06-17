@@ -1,9 +1,6 @@
 package com.anthonylldev.linkimbo.post.infrastructure
 
-import com.anthonylldev.linkimbo.post.application.data.PostCommentRequest
-import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
-import com.anthonylldev.linkimbo.post.application.data.PostRequest
-import com.anthonylldev.linkimbo.post.application.data.PostResponse
+import com.anthonylldev.linkimbo.post.application.data.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -36,4 +33,8 @@ interface PostRestController {
         @Path("postId") postId: String
     ): PostResponse
 
+    @GET("/post/{postId}/comment")
+    suspend fun getAllComments(
+        @Path("postId") postId: String
+    ): List<PostCommentResponse>
 }

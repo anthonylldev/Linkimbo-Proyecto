@@ -87,7 +87,7 @@ fun Navigation(
             arguments = listOf(
                 navArgument(name = "postId") {
                     type = NavType.StringType
-                    nullable = true
+                    nullable = false
                     defaultValue = ""
                 }
             )
