@@ -16,8 +16,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.post.domain.model.Comment
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
+import com.anthonylldev.linkimbo.util.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_detail.CommentLayout
 import com.anthonylldev.linkimbo.util.ui.components.CustomTextField
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
@@ -38,7 +37,7 @@ fun CommentPostScreen(
         LaunchedEffect(key1 = true) {
             commentPostViewModel.eventFlow.collectLatest { event ->
                 when (event) {
-                    is PostEvent.Comment -> commentPostViewModel.loadComments(postId)
+                    is UiEvent.Comment -> commentPostViewModel.loadComments(postId)
                 }
             }
         }

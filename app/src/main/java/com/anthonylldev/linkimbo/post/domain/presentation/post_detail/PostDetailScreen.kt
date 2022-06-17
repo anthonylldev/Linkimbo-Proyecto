@@ -25,10 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
-import com.anthonylldev.linkimbo.post.domain.model.Comment
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
+import com.anthonylldev.linkimbo.util.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.ActionRow
 import com.anthonylldev.linkimbo.util.DateFormatUtil
 import com.anthonylldev.linkimbo.util.ImageUtil
@@ -58,7 +56,7 @@ fun PostDetailScreen(
         LaunchedEffect(key1 = true) {
             postDetailViewModel.eventFlow.collectLatest { event ->
                 when (event) {
-                    is PostEvent.Like -> postDetailViewModel.loadPost(postDetailViewModel.post.value!!.id!!)
+                    is UiEvent.Like -> postDetailViewModel.loadPost(postDetailViewModel.post.value!!.id!!)
                 }
             }
         }

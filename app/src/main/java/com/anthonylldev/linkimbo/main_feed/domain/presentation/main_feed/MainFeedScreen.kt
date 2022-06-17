@@ -10,14 +10,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
+import com.anthonylldev.linkimbo.util.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.Post
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.navigation.Screen
@@ -33,7 +31,7 @@ fun MainFeedScreen(
     LaunchedEffect(key1 = true) {
         mainFeedViewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is PostEvent.Like -> mainFeedViewModel.loadPosts()
+                is UiEvent.Like -> mainFeedViewModel.loadPosts()
             }
         }
     }

@@ -8,7 +8,7 @@ import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
 import com.anthonylldev.linkimbo.post.application.data.PostLikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
+import com.anthonylldev.linkimbo.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,7 +26,7 @@ class PostDetailViewModel @Inject constructor(
     private val _post = mutableStateOf<PostResponse?>(null)
     val post: State<PostResponse?> = _post
 
-    private val _eventFlow = MutableSharedFlow<PostEvent>()
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun loadPost(postId: String) {
@@ -46,7 +46,7 @@ class PostDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (_post.value?.id != null) {
                 postService.likePost(_post.value!!.id!!, PostLikeRequest(true))
-                _eventFlow.emit(PostEvent.Like)
+                _eventFlow.emit(UiEvent.Like)
             }
         }
     }
@@ -55,7 +55,7 @@ class PostDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (_post.value?.id != null) {
                 postService.likePost(_post.value!!.id!!, PostLikeRequest(false))
-                _eventFlow.emit(PostEvent.Like)
+                _eventFlow.emit(UiEvent.Like)
             }
         }
     }

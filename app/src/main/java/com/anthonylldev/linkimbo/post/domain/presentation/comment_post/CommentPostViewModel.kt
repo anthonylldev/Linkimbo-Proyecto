@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.anthonylldev.linkimbo.post.application.data.PostCommentRequest
 import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.post.domain.presentation.PostEvent
+import com.anthonylldev.linkimbo.util.UiEvent
 import com.anthonylldev.linkimbo.util.Constants
 import com.anthonylldev.linkimbo.util.ui.presentation.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +29,7 @@ class CommentPostViewModel @Inject constructor(
     private val _commentTextState = mutableStateOf(TextFieldState("", ""))
     val commentTextState: State<TextFieldState> = _commentTextState
 
-    private val _eventFlow = MutableSharedFlow<PostEvent>()
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun setCommentText(state: TextFieldState) {
@@ -49,7 +49,7 @@ class CommentPostViewModel @Inject constructor(
                         timestamp = timestamp
                     )
                 )
-                _eventFlow.emit(PostEvent.Comment)
+                _eventFlow.emit(UiEvent.Comment)
             }
         }
     }
