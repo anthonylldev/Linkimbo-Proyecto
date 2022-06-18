@@ -35,23 +35,25 @@ fun ProfileHeader(
         Column(
             horizontalAlignment = Alignment.End
         ) {
-            Text(
-                text = profile?.followerCount.toString(),
-                style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = stringResource(id = R.string.followers),
-                style = MaterialTheme.typography.body2,
-                color = HintGray
-            )
+            profile?.followerCount?.let {
+                Text(
+                    text = profile.followerCount.toString(),
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = stringResource(id = R.string.followers),
+                    style = MaterialTheme.typography.body2,
+                    color = HintGray
+                )
+            }
         }
 
         if (profile != null) {
             if (profile.imageBase64 == null) {
                 Image(
                     painter = painterResource(id = R.drawable.default_profile),
-                    contentDescription = "user.profilePictureUrl",
+                    contentDescription = "User profile",
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .size(ProfileSize)
@@ -60,7 +62,7 @@ fun ProfileHeader(
             } else {
                 Image(
                     bitmap = ImageUtil.base64ToBitmap(profile.imageBase64)!!.asImageBitmap(),
-                    contentDescription = "user.profilePictureUrl",
+                    contentDescription = "User profile",
                     modifier = Modifier
                         .padding(SpaceMedium)
                         .size(ProfileSize)
@@ -72,16 +74,18 @@ fun ProfileHeader(
         Column(
             horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = profile?.followingCount.toString(),
-                style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = stringResource(id = R.string.following),
-                style = MaterialTheme.typography.body2,
-                color = HintGray
-            )
+            profile?.followingCount?.let {
+                Text(
+                    text = profile.followingCount.toString(),
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = stringResource(id = R.string.following),
+                    style = MaterialTheme.typography.body2,
+                    color = HintGray
+                )
+            }
         }
     }
 
@@ -92,18 +96,18 @@ fun ProfileHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = profile?.realName.toString(),
+            text = profile?.realName ?: "",
             style = MaterialTheme.typography.h6
         )
 
         Text(
-            text = profile?.description.toString(),
+            text = profile?.description ?: "",
             style = MaterialTheme.typography.body2,
             textAlign = TextAlign.Center
         )
 
         Text(
-            text = profile?.website.toString(),
+            text = profile?.website ?: "",
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.primary
         )

@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anthonylldev.linkimbo.profile.application.data.ProfilePostResponse
 import com.anthonylldev.linkimbo.profile.application.service.UserService
 import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userService: UserService
-): ViewModel() {
+) : ViewModel() {
 
-    private val _userId = mutableStateOf<String>("")
+    private val _posts = mutableStateOf(emptyList<ProfilePostResponse>())
+    val posts: State<List<ProfilePostResponse>> = _posts
+
+    private val _userId = mutableStateOf("")
     val userId: State<String> = _userId
 
     private val _profile = mutableStateOf<ProfileResponse?>(null)
@@ -29,6 +33,14 @@ class ProfileViewModel @Inject constructor(
     fun loadProfile() {
         viewModelScope.launch {
             _profile.value = userService.loadProfile(_userId.value)
+        }
+    }
+
+    fun loadPosts(userId: String?) {
+        userId?.let {
+            viewModelScope.launch {
+                _posts.value = userService.loadPosts(userId)
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ fun ProfileScreen(
         StandarToolbar(
             navController = navController,
             modifier = Modifier.fillMaxWidth(),
-            title = profileViewModel.profile.value?.username.toString(),
+            title = profileViewModel.profile.value?.username ?: "",
             showBackArrow = true,
             navActions = {
                 Icon(
@@ -56,18 +56,22 @@ fun ProfileScreen(
                     profile = profileViewModel.profile.value
                 )
             }
-            
-            item { 
+
+            item {
                 Spacer(modifier = Modifier.height(SpaceMedium))
             }
+
+            profileViewModel.loadPosts(userId)
 
             item {
                 FlowRow {
                     ProfilePostSection(
-                        navController = navController
+                        navController = navController,
+                        posts = profileViewModel.posts.value
                     )
                 }
             }
+
         }
     }
 }

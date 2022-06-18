@@ -2,6 +2,7 @@ package com.anthonylldev.linkimbo.profile.application.service.impl
 
 import android.content.SharedPreferences
 import com.anthonylldev.linkimbo.authentication.domain.model.User
+import com.anthonylldev.linkimbo.profile.application.data.ProfilePostResponse
 import com.anthonylldev.linkimbo.profile.application.service.UserService
 import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
 import com.anthonylldev.linkimbo.profile.infrastructure.UserRestController
@@ -26,6 +27,22 @@ class UserServiceImpl(
             }
 
             return null
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun loadPosts(userId: String): List<ProfilePostResponse> {
+        try {
+            if (userId == "me") {
+                this.sharedPreferences.getString(Constants.PERSONAL_USER_ID, null)?.let {
+                    return this.api.loadPosts(it)
+                }
+            } else {
+                return this.api.loadPosts(userId)
+            }
+
+            return emptyList()
         } catch (e: Exception) {
             throw e
         }
