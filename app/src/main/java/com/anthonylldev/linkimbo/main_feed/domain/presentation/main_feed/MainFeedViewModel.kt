@@ -19,6 +19,9 @@ class MainFeedViewModel @Inject constructor(
     private val postService: PostService
 ) : ViewModel() {
 
+    private val _isLoading = mutableStateOf(true)
+    val isLoading: State<Boolean> = _isLoading
+
     private val _allPosts = mutableStateOf(emptyList<PostResponse>())
     val allPosts: State<List<PostResponse>> = _allPosts
 
@@ -32,6 +35,8 @@ class MainFeedViewModel @Inject constructor(
     fun loadPosts() {
         viewModelScope.launch {
             _allPosts.value = postService.getAllPostSortByTimestamp()
+            _isLoading.value = false
+            _eventFlow.emit(UiEvent.LoadSuccesful)
         }
     }
 
@@ -49,4 +54,5 @@ class MainFeedViewModel @Inject constructor(
             _eventFlow.emit(UiEvent.Like)
         }
     }
+
 }

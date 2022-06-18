@@ -4,11 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,7 +33,7 @@ fun MainFeedScreen(
 
     LaunchedEffect(key1 = true) {
         mainFeedViewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is UiEvent.Like -> mainFeedViewModel.loadPosts()
             }
         }
@@ -59,29 +62,44 @@ fun MainFeedScreen(
             }
         )
 
-        LazyColumn {
-            items(mainFeedViewModel.allPosts.value) { post ->
-                Post(
-                    post = post,
-                    navController = navController,
-                    onUsernameClick = {
-                        navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
-                    },
-                    onLikeClick = { isLiked ->
-                        if (isLiked && post.id != null) {
-                            mainFeedViewModel.like(post.id)
-                        } else if (post.id != null) {
-                            mainFeedViewModel.unLike(post.id)
+        if (!mainFeedViewModel.isLoading.value) {
+            LazyColumn {
+                items(mainFeedViewModel.allPosts.value) { post ->
+                    Post(
+                        post = post,
+                        navController = navController,
+                        onUsernameClick = {
+                            navController.navigate(Screen.ProfileScreen.route + "?userId=${post.user.id}")
+                        },
+                        onLikeClick = { isLiked ->
+                            if (isLiked && post.id != null) {
+                                mainFeedViewModel.like(post.id)
+                            } else if (post.id != null) {
+                                mainFeedViewModel.unLike(post.id)
+                            }
+                        },
+                        onCommentClick = {
+                            navController.navigate(Screen.CommentPostScreen.route + "?postId=${post.id}")
                         }
-                    },
-                    onCommentClick = {
-                        navController.navigate(Screen.CommentPostScreen.route + "?postId=${post.id}")
-                    }
-                )
-            }
+                    )
+                }
 
-            item {
-                Spacer(modifier = Modifier.height(75.dp))
+                item {
+                    Spacer(modifier = Modifier.height(75.dp))
+                }
+            }
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    strokeWidth = 6.dp,
+                    modifier = Modifier
+                        .size(50.dp)
+                )
             }
         }
     }
