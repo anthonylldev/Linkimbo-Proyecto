@@ -49,4 +49,6 @@
     <string name="biography">Biography</string>
     <string name="website">Website</string>
     <string name="create_post">Create post</string>
+    <string name="comment_post">Comment post</string>
+    <string name="close_session">Close session</string>
 </resources>

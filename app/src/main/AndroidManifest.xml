@@ -2,17 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anthonylldev.linkimbo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".LinkimboApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_linkimbo"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_linkimbo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Linkimbo"
         android:windowSoftInputMode="adjustResize">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".util.ui.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Linkimbo">
@@ -22,6 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

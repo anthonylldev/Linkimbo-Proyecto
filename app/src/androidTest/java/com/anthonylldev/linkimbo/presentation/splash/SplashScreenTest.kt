@@ -4,8 +4,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.anthonylldev.linkimbo.presentation.MainActivity
-import com.anthonylldev.linkimbo.presentation.ui.theme.LinkimboTheme
+import com.anthonylldev.linkimbo.splash.SplashScreen
+import com.anthonylldev.linkimbo.util.ui.presentation.MainActivity
+import com.anthonylldev.linkimbo.util.ui.theme.LinkimboTheme
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
