@@ -6,6 +6,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.anthonylldev.linkimbo.chat.domain.model.Message
 import com.anthonylldev.linkimbo.util.Constants
@@ -24,15 +26,24 @@ fun Message(
         elevation = 5.dp,
         shape = MaterialTheme.shapes.medium
     ) {
-        Text(
-            text = DateFormatUtil.timestampToFormattedString(
-                timestamp = message.timestamp,
-                patter = Constants.PATTER_TIME
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(SpaceMedium)
+        ) {
+            Text(
+                text = DateFormatUtil.timestampToFormattedString(
+                    timestamp = message.timestamp,
+                    patter = Constants.PATTER_TIME
+                ),
+                textAlign = TextAlign.End,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth()
             )
-        )
 
-        Spacer(modifier = Modifier.height(SpaceMedium))
+            Spacer(modifier = Modifier.height(SpaceMedium))
 
-        Text(text = message.message)
+            Text(text = message.message)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.chat.domain.presentation
+package com.anthonylldev.linkimbo.chat.domain.presentation.chat
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.chat.domain.presentation.component.Message
-import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.Post
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.presentation.UiEvent
@@ -64,6 +62,8 @@ fun ChatScreen(
                 )
             }
         )
+
+        chatViewModel.messages()
 
         if (!chatViewModel.isLoading.value) {
             LazyColumn(

@@ -12,7 +12,8 @@ import com.anthonylldev.linkimbo.activity.domain.presentation.ActivityScreen
 import com.anthonylldev.linkimbo.post.domain.presentation.create_post.CreatePostScreen
 import com.anthonylldev.linkimbo.main_feed.domain.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.authentication.domain.presentation.screen.AuthScreen
-import com.anthonylldev.linkimbo.chat.domain.presentation.ChatScreen
+import com.anthonylldev.linkimbo.chat.domain.presentation.chat.ChatScreen
+import com.anthonylldev.linkimbo.chat.domain.presentation.send_message.SendMessageScreen
 import com.anthonylldev.linkimbo.post.domain.presentation.comment_post.CommentPostScreen
 import com.anthonylldev.linkimbo.profile.domain.presentation.edit_profile.EditProfileScreen
 import com.anthonylldev.linkimbo.post.domain.presentation.post_detail.PostDetailScreen
@@ -117,6 +118,22 @@ fun Navigation(
             Screen.EditProfileScreen.route
         ) {
             EditProfileScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.SendMessageScreen.route + "?userId={userId}",
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = ""
+                }
+            )
+        ) {
+            SendMessageScreen(
+                navController = navController,
+                userId = it.arguments?.getString("userId")
+            )
         }
     }
 }

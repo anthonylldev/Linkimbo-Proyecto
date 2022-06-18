@@ -25,6 +25,8 @@ import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 fun ProfileHeader(
     navController: NavController,
     profile: ProfileResponse?,
+    onMessageClick: () -> Unit,
+    onFollowClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -120,11 +122,7 @@ fun ProfileHeader(
         navController = navController,
         isOwnProfile = profile?.isOwnProfile ?: false,
         isFollowing =  profile?.isFollowing ?: false,
-        onMessageClick = {
-
-        },
-        onFollowClick = {
-
-        }
+        onMessageClick = onMessageClick,
+        onFollowClick = onFollowClick
     )
 }

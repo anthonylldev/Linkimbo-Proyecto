@@ -59,7 +59,13 @@ fun ProfileScreen(
             item {
                 ProfileHeader(
                     navController = navController,
-                    profile = profileViewModel.profile.value
+                    profile = profileViewModel.profile.value,
+                    onMessageClick = {
+                        navController.navigate(Screen.SendMessageScreen.route + "?userId=${userId}")
+                    },
+                    onFollowClick = {
+
+                    }
                 )
             }
 

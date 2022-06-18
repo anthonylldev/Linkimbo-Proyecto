@@ -1,4 +1,4 @@
-package com.anthonylldev.linkimbo.chat.domain.presentation
+package com.anthonylldev.linkimbo.chat.domain.presentation.chat
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
