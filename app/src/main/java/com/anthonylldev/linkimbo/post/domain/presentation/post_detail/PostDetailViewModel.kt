@@ -32,6 +32,8 @@ class PostDetailViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+
+
     fun loadPost(postId: String) {
         viewModelScope.launch {
             _post.value = postService.getPost(postId)

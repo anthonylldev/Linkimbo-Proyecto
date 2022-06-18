@@ -48,6 +48,22 @@ class UserServiceImpl(
         }
     }
 
+    override suspend fun follow(userId: String) {
+        try {
+            this.api.follow(userId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun unfollow(userId: String) {
+        try {
+            this.api.unfollow(userId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override suspend fun getUserById(userId: String): User {
         try {
             return this.api.getUserById(userId)

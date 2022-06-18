@@ -6,4 +6,5 @@ sealed class UiEvent: Event() {
     object Like: UiEvent()
     object Comment: UiEvent()
     object LoadSuccessful: UiEvent()
+    object Follow : UiEvent()
 }

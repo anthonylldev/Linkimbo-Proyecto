@@ -54,4 +54,22 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
+    fun follow(userId: String?) {
+        viewModelScope.launch {
+            userId?.let {
+                userService.follow(userId)
+                _eventFlow.emit(UiEvent.Follow)
+            }
+        }
+    }
+
+    fun unfollow(userId: String?) {
+        viewModelScope.launch {
+            userId?.let {
+                userService.unfollow(userId)
+                _eventFlow.emit(UiEvent.Follow)
+            }
+        }
+    }
 }

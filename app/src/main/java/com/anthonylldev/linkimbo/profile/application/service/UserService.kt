@@ -10,4 +10,6 @@ interface UserService {
     suspend fun loadPosts(userId: String): List<ProfilePostResponse>
     suspend fun getUserById(userId: String): User
     suspend fun updateUserById(user: User, userId: String)
+    suspend fun follow(userId: String)
+    suspend fun unfollow(userId: String)
 }

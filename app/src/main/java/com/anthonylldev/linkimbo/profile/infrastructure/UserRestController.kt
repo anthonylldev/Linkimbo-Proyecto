@@ -3,12 +3,19 @@ package com.anthonylldev.linkimbo.profile.infrastructure
 import com.anthonylldev.linkimbo.authentication.domain.model.User
 import com.anthonylldev.linkimbo.profile.application.data.ProfilePostResponse
 import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface UserRestController {
+
+    @POST("/user/profile/{userId}/follow")
+    suspend fun follow(
+        @Path("userId") userId: String
+    )
+
+    @POST("/user/profile/{userId}/unfollow")
+    suspend fun unfollow(
+        @Path("userId") userId: String
+    )
 
     @GET("/user/profile/{userId}")
     suspend fun loadProfile(

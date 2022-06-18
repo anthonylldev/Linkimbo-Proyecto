@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,8 +20,10 @@ import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.components.ProfileHeader
 import com.anthonylldev.linkimbo.profile.domain.presentation.profile.components.ProfilePostSection
 import com.anthonylldev.linkimbo.util.navigation.Screen
+import com.anthonylldev.linkimbo.util.ui.presentation.UiEvent
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.google.accompanist.flowlayout.FlowRow
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ProfileScreen(
@@ -32,6 +35,14 @@ fun ProfileScreen(
 
     userId?.let { profileViewModel.setUserId(it) }
     profileViewModel.loadProfile()
+
+    LaunchedEffect(key1 = true) {
+        profileViewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is UiEvent.Follow -> profileViewModel.loadProfile()
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -64,7 +75,13 @@ fun ProfileScreen(
                         navController.navigate(Screen.SendMessageScreen.route + "?userId=${userId}")
                     },
                     onFollowClick = {
-
+                        profileViewModel.profile.value?.isFollowing?.let {
+                            if (it) {
+                                profileViewModel.unfollow(userId)
+                            } else {
+                                profileViewModel.follow(userId)
+                            }
+                        }
                     }
                 )
             }
