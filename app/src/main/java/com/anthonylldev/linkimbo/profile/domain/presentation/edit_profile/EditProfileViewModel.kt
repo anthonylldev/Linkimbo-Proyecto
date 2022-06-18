@@ -1,5 +1,6 @@
 package com.anthonylldev.linkimbo.profile.domain.presentation.edit_profile
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -120,5 +121,11 @@ class EditProfileViewModel @Inject constructor(
     fun setWebsiteState(state: TextFieldState) {
         this._website.value = state
         this._user.value?.website = state.text
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    fun closeSession(): Boolean {
+        sharedPreferences.edit().clear().apply()
+        return true
     }
 }

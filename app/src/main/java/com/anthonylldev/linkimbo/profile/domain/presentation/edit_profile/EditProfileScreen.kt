@@ -26,6 +26,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.util.ImageUtil
+import com.anthonylldev.linkimbo.util.navigation.Screen
+import com.anthonylldev.linkimbo.util.ui.components.CustomButton
 import com.anthonylldev.linkimbo.util.ui.components.CustomTextField
 import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.HintGray
@@ -78,7 +80,8 @@ fun EditProfileScreen(
                     imageVector = Icons.Default.Check,
                     contentDescription = "",
                     tint = HintGray,
-                    modifier = Modifier.padding(SpaceMedium)
+                    modifier = Modifier
+                        .padding(SpaceMedium)
                         .clickable {
                             editProfileViewModel.updateUser()
                         }
@@ -189,6 +192,12 @@ fun EditProfileScreen(
                     ),
                     imeAction = ImeAction.Next
                 )
+
+                Spacer(modifier = Modifier.height(SpaceMedium))
+
+                CustomButton(text = stringResource(id = R.string.close_session)) {
+                    if(editProfileViewModel.closeSession()) navController.navigate(Screen.SplashScreen.route)
+                }
             }
         }
     }

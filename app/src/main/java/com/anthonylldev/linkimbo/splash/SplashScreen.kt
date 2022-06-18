@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.util.navigation.Screen
@@ -21,7 +22,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    splashScreenViewModel: SplashScreenViewModel = hiltViewModel()
 ) {
 
     val scale = remember {
@@ -43,9 +45,18 @@ fun SplashScreen(
             )
         )
         delay(Constants.SPLASH_SCREEN_DURATION)
-        navController.navigate(Screen.AuthScreen.route) {
-            popUpTo(Screen.SplashScreen.route) {
-                inclusive = true
+
+        if (splashScreenViewModel.checkSession()) {
+            navController.navigate(Screen.MainFeedScreen.route) {
+                popUpTo(Screen.SplashScreen.route) {
+                    inclusive = true
+                }
+            }
+        } else {
+            navController.navigate(Screen.AuthScreen.route) {
+                popUpTo(Screen.SplashScreen.route) {
+                    inclusive = true
+                }
             }
         }
     }
