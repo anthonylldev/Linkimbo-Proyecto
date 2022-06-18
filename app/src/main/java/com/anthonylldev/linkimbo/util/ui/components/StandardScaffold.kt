@@ -1,5 +1,6 @@
 package com.anthonylldev.linkimbo.util.ui.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -51,17 +52,23 @@ fun StandardScaffold(
         )
     )
 
+    val backgroundColor = if (isSystemInDarkTheme()) {
+        Color.Black
+    } else {
+        Color.White
+    }
+
     Scaffold(
         bottomBar = {
             if (showBottomBar) {
                 BottomAppBar(
                     modifier = Modifier,
-                    backgroundColor = Color.Black,
+                    backgroundColor = backgroundColor,
                     cutoutShape = CircleShape,
                     elevation = 5.dp
                 ) {
                     BottomNavigation(
-                        backgroundColor = Color.Black
+                        backgroundColor = backgroundColor
                     ) {
                         bottomNavItems.forEachIndexed { i, bottomNavItem ->
                             StandardBottomNavItem(

@@ -119,6 +119,12 @@ fun ProfileHeader(
     ButtonProfileSection(
         navController = navController,
         isOwnProfile = profile?.isOwnProfile ?: false,
-        isFollowing =  profile?.isFollowing ?: false
+        isFollowing =  profile?.isFollowing ?: false,
+        onMessageClick = {
+
+        },
+        onFollowClick = {
+
+        }
     )
 }
