@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -20,17 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
 import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
-import com.anthonylldev.linkimbo.util.UiEvent
+import com.anthonylldev.linkimbo.util.ui.presentation.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_simple.ActionRow
 import com.anthonylldev.linkimbo.util.DateFormatUtil
 import com.anthonylldev.linkimbo.util.ImageUtil
@@ -39,7 +35,6 @@ import com.anthonylldev.linkimbo.util.ui.components.StandarToolbar
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceExtraSmall
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceMedium
 import com.anthonylldev.linkimbo.util.ui.theme.SpaceSmall
-import com.anthonylldev.linkimbo.util.ui.theme.UnselectedIcons
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

@@ -1,9 +1,9 @@
-package com.anthonylldev.linkimbo.util
+package com.anthonylldev.linkimbo.util.ui.presentation
 
 abstract class Event
 
 sealed class UiEvent: Event() {
     object Like: UiEvent()
     object Comment: UiEvent()
-    object LoadSuccesful: UiEvent()
+    object LoadSuccessful: UiEvent()
 }

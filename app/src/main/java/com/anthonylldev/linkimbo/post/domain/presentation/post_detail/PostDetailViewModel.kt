@@ -4,11 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anthonylldev.linkimbo.activity.application.data.ActivityRequest
+import com.anthonylldev.linkimbo.activity.application.service.ActivityService
 import com.anthonylldev.linkimbo.post.application.data.PostCommentResponse
 import com.anthonylldev.linkimbo.post.application.data.LikeRequest
 import com.anthonylldev.linkimbo.post.application.data.PostResponse
 import com.anthonylldev.linkimbo.post.application.service.PostService
-import com.anthonylldev.linkimbo.util.UiEvent
+import com.anthonylldev.linkimbo.util.ui.presentation.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -17,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
-    private val postService: PostService
+    private val postService: PostService,
+    private val activityService: ActivityService
 ) : ViewModel() {
 
     private val _allComments = mutableStateOf(emptyList<PostCommentResponse>())
@@ -46,6 +49,18 @@ class PostDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (_post.value?.id != null) {
                 postService.likePost(_post.value!!.id!!, LikeRequest(isLiked))
+
+                if (isLiked) {
+                    val post = postService.getPost(_post.value!!.id!!)
+                    val timestamp = System.currentTimeMillis()
+
+                    activityService.insertActivity(
+                        ActivityRequest(
+                            post.user.id, "liked_post", timestamp
+                        )
+                    )
+                }
+
                 _eventFlow.emit(UiEvent.Like)
             }
         }
@@ -59,6 +74,18 @@ class PostDetailViewModel @Inject constructor(
                     commentId,
                     LikeRequest(isLiked)
                 )
+
+                if (isLiked) {
+                    val post = postService.getPost(_post.value!!.id!!)
+                    val timestamp = System.currentTimeMillis()
+
+                    activityService.insertActivity(
+                        ActivityRequest(
+                            post.user.id, "liked_comment", timestamp
+                        )
+                    )
+                }
+
                 _eventFlow.emit(UiEvent.Like)
             }
         }

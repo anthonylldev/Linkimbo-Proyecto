@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.anthonylldev.linkimbo.profile.application.data.ProfilePostResponse
 import com.anthonylldev.linkimbo.profile.application.service.UserService
 import com.anthonylldev.linkimbo.profile.application.data.ProfileResponse
-import com.anthonylldev.linkimbo.util.UiEvent
+import com.anthonylldev.linkimbo.util.ui.presentation.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -50,7 +50,7 @@ class ProfileViewModel @Inject constructor(
             viewModelScope.launch {
                 _posts.value = userService.loadPosts(userId)
                 _isLoading.value = false
-                _eventFlow.emit(UiEvent.LoadSuccesful)
+                _eventFlow.emit(UiEvent.LoadSuccessful)
             }
         }
     }

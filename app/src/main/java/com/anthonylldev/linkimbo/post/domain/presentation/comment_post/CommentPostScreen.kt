@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anthonylldev.linkimbo.R
-import com.anthonylldev.linkimbo.util.UiEvent
+import com.anthonylldev.linkimbo.util.ui.presentation.UiEvent
 import com.anthonylldev.linkimbo.post.domain.presentation.post_detail.CommentLayout
 import com.anthonylldev.linkimbo.util.navigation.Screen
 import com.anthonylldev.linkimbo.util.ui.components.CustomTextField

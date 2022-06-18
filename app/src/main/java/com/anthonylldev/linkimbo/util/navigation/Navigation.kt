@@ -8,8 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.anthonylldev.linkimbo.authentication.domain.model.User
-import com.anthonylldev.linkimbo.presentation.activity.ActivityScreen
+import com.anthonylldev.linkimbo.activity.domain.presentation.ActivityScreen
 import com.anthonylldev.linkimbo.post.domain.presentation.create_post.CreatePostScreen
 import com.anthonylldev.linkimbo.main_feed.domain.presentation.main_feed.MainFeedScreen
 import com.anthonylldev.linkimbo.authentication.domain.presentation.screen.AuthScreen
